@@ -46,8 +46,8 @@ export function useDictionarySearch(query: string) {
 
   useEffect(() => {
     const searchDictionary = async () => {
-      // Require at least 2 characters for meaningful search
-      if (searchTerm.length < 2) {
+      // Require at least 1 character for search
+      if (searchTerm.length < 1) {
         setSuggestions([]);
         return;
       }
@@ -57,17 +57,33 @@ export function useDictionarySearch(query: string) {
       try {
         const searchLower = searchTerm.toLowerCase();
         
-        // Search both German and English columns, plus inflected forms in search_forms
+        // Search German word prefix, English translation contains, and search_forms prefix match
         const { data, error } = await supabase
           .from('dictionary')
-          .select('id, german_word, english_translation, word_type, metadata')
-          .or(`german_word.ilike.${searchLower}%,english_translation.ilike.%${searchLower}%,search_forms.cs.{${searchLower}}`)
-          .limit(10);
+          .select('id, german_word, english_translation, word_type, metadata, search_forms')
+          .or(`german_word.ilike.${searchLower}%,english_translation.ilike.%${searchLower}%`)
+          .limit(20);
 
         if (error) throw error;
 
+        // Also check search_forms for prefix matches (not just exact)
+        const filteredData = (data || []).filter(item => {
+          // Already matched by german_word or english_translation
+          const germanMatch = item.german_word.toLowerCase().startsWith(searchLower);
+          const englishMatch = item.english_translation.toLowerCase().includes(searchLower);
+          
+          if (germanMatch || englishMatch) return true;
+          
+          // Check if any search_form starts with the search term
+          const formsMatch = (item.search_forms || []).some((form: string) => 
+            form.toLowerCase().startsWith(searchLower)
+          );
+          
+          return formsMatch;
+        });
+
         // Cast the data to match our types
-        const typedData: DictionarySuggestion[] = (data || []).map(item => ({
+        const typedData: DictionarySuggestion[] = filteredData.slice(0, 10).map(item => ({
           id: item.id,
           german_word: item.german_word,
           english_translation: item.english_translation,
