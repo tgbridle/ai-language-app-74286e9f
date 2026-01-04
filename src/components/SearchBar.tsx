@@ -19,10 +19,19 @@ export function SearchBar({ onSelectEntry }: SearchBarProps) {
   const inputRef = useRef<HTMLInputElement>(null);
   const listRef = useRef<HTMLUListElement>(null);
 
+  // Track previous suggestion count to only reset highlight when results change
+  const prevSuggestionsLength = useRef(suggestions.length);
+  
   useEffect(() => {
-    setIsOpen(suggestions.length > 0 && query.length > 0);
-    setHighlightedIndex(-1);
-  }, [suggestions, query]);
+    const hasResults = suggestions.length > 0 && query.length > 0;
+    setIsOpen(hasResults);
+    
+    // Only reset highlight when switching from no results to results, or vice versa
+    if (suggestions.length !== prevSuggestionsLength.current) {
+      setHighlightedIndex(-1);
+      prevSuggestionsLength.current = suggestions.length;
+    }
+  }, [suggestions.length, query.length]);
 
   const handleSelect = (suggestion: DictionarySuggestion) => {
     onSelectEntry(suggestion.id);
