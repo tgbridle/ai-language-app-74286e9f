@@ -36,11 +36,18 @@ export const WORD_TYPE_COLORS: Record<WordType, { badge: string; text: string }>
   },
 };
 
-// Gender colors for nouns
+// Gender colors for nouns - Blue (masc), Red (fem), Amber/Orange (neuter)
 export const GENDER_COLORS = {
-  masculine: 'bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-300',
-  feminine: 'bg-rose-100 text-rose-800 dark:bg-rose-900/30 dark:text-rose-300',
-  neuter: 'bg-emerald-100 text-emerald-800 dark:bg-emerald-900/30 dark:text-emerald-300',
+  masculine: 'bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-300',
+  feminine: 'bg-rose-100 text-rose-700 dark:bg-rose-900/30 dark:text-rose-300',
+  neuter: 'bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-300',
+} as const;
+
+// Text-only gender colors for inline usage (e.g., article in header)
+export const GENDER_TEXT_COLORS = {
+  masculine: 'text-blue-600 dark:text-blue-400',
+  feminine: 'text-rose-600 dark:text-rose-400',
+  neuter: 'text-amber-600 dark:text-amber-400',
 } as const;
 
 export const CASE_COLORS = {
