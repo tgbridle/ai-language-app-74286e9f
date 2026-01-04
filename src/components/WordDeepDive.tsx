@@ -4,7 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Skeleton } from '@/components/ui/skeleton';
 import { useDictionaryDetails } from '@/hooks/useDictionaryDetails';
 import { cn } from '@/lib/utils';
-import { WORD_TYPE_COLORS, GENDER_COLORS, CASE_COLORS } from '@/lib/wordTypeColors';
+import { WORD_TYPE_COLORS, GENDER_COLORS, GENDER_TEXT_COLORS, CASE_COLORS } from '@/lib/wordTypeColors';
 import { 
   isNounMetadata, 
   isVerbMetadata, 
@@ -196,9 +196,10 @@ export function WordDeepDive({ entryId, onBack }: WordDeepDiveProps) {
   // Build the header display
   const getHeaderDisplay = () => {
     if (entry.word_type === 'noun' && isNounMetadata(entry.metadata)) {
+      const genderTextClass = GENDER_TEXT_COLORS[entry.metadata.gender];
       return (
         <>
-          <span className="text-primary">{entry.metadata.article}</span>{' '}
+          <span className={genderTextClass}>{entry.metadata.article}</span>{' '}
           <span className="text-foreground">{entry.german_word}</span>
         </>
       );
