@@ -8,7 +8,7 @@ const Index = () => {
         {/* Header */}
         <header className="text-center mb-10 sm:mb-14">
           <h1 className="text-3xl sm:text-4xl font-bold text-foreground tracking-tight mb-2">Langly</h1>
-          <p className="text-muted-foreground text-lg max-w-md mx-auto">Your companion for mastering a second language.</p>
+          <p className="text-muted-foreground text-lg max-w-md mx-auto">Lookup, understand, apply. Your companion for learning a language.</p>
         </header>
 
         {/* Main Content */}
