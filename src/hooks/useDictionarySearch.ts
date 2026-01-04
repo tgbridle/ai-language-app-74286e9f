@@ -66,24 +66,37 @@ export function useDictionarySearch(query: string) {
 
         if (error) throw error;
 
-        // Also check search_forms for prefix matches (not just exact)
-        const filteredData = (data || []).filter(item => {
-          // Already matched by german_word or english_translation
-          const germanMatch = item.german_word.toLowerCase().startsWith(searchLower);
-          const englishMatch = item.english_translation.toLowerCase().includes(searchLower);
+        // Score and sort results by relevance
+        const scoredData = (data || []).map(item => {
+          const germanLower = item.german_word.toLowerCase();
+          const englishLower = item.english_translation.toLowerCase();
           
-          if (germanMatch || englishMatch) return true;
+          let score = 0;
           
-          // Check if any search_form starts with the search term
-          const formsMatch = (item.search_forms || []).some((form: string) => 
-            form.toLowerCase().startsWith(searchLower)
-          );
+          // Exact match on german_word = highest priority
+          if (germanLower === searchLower) score = 100;
+          // Exact match on english_translation
+          else if (englishLower === searchLower) score = 90;
+          // German word starts with search term
+          else if (germanLower.startsWith(searchLower)) score = 70;
+          // English starts with search term
+          else if (englishLower.startsWith(searchLower)) score = 60;
+          // English contains search term
+          else if (englishLower.includes(searchLower)) score = 40;
+          // search_forms match
+          else score = 20;
           
-          return formsMatch;
+          return { ...item, score };
+        });
+        
+        // Sort by score descending, then alphabetically
+        scoredData.sort((a, b) => {
+          if (b.score !== a.score) return b.score - a.score;
+          return a.german_word.localeCompare(b.german_word);
         });
 
         // Cast the data to match our types
-        const typedData: DictionarySuggestion[] = filteredData.slice(0, 10).map(item => ({
+        const typedData: DictionarySuggestion[] = scoredData.slice(0, 10).map(item => ({
           id: item.id,
           german_word: item.german_word,
           english_translation: item.english_translation,
