@@ -14,60 +14,36 @@ export type Database = {
   }
   public: {
     Tables: {
-      nouns: {
+      dictionary: {
         Row: {
-          acc_pl: string | null
-          acc_sg: string
-          article: string
           created_at: string
-          dat_pl: string | null
-          dat_sg: string
-          english_meaning: string
-          gen_pl: string | null
-          gen_sg: string
-          gender: string
+          english_translation: string
+          german_word: string
           grammar_note: string | null
           id: string
-          lemma: string
-          nom_pl: string | null
-          nom_sg: string
+          metadata: Json
           search_forms: string[]
+          word_type: Database["public"]["Enums"]["word_type"]
         }
         Insert: {
-          acc_pl?: string | null
-          acc_sg: string
-          article: string
           created_at?: string
-          dat_pl?: string | null
-          dat_sg: string
-          english_meaning: string
-          gen_pl?: string | null
-          gen_sg: string
-          gender: string
+          english_translation: string
+          german_word: string
           grammar_note?: string | null
           id?: string
-          lemma: string
-          nom_pl?: string | null
-          nom_sg: string
+          metadata?: Json
           search_forms?: string[]
+          word_type: Database["public"]["Enums"]["word_type"]
         }
         Update: {
-          acc_pl?: string | null
-          acc_sg?: string
-          article?: string
           created_at?: string
-          dat_pl?: string | null
-          dat_sg?: string
-          english_meaning?: string
-          gen_pl?: string | null
-          gen_sg?: string
-          gender?: string
+          english_translation?: string
+          german_word?: string
           grammar_note?: string | null
           id?: string
-          lemma?: string
-          nom_pl?: string | null
-          nom_sg?: string
+          metadata?: Json
           search_forms?: string[]
+          word_type?: Database["public"]["Enums"]["word_type"]
         }
         Relationships: []
       }
@@ -79,7 +55,15 @@ export type Database = {
       [_ in never]: never
     }
     Enums: {
-      [_ in never]: never
+      word_type:
+        | "noun"
+        | "verb"
+        | "adjective"
+        | "adverb"
+        | "pronoun"
+        | "preposition"
+        | "conjunction"
+        | "article"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -206,6 +190,17 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      word_type: [
+        "noun",
+        "verb",
+        "adjective",
+        "adverb",
+        "pronoun",
+        "preposition",
+        "conjunction",
+        "article",
+      ],
+    },
   },
 } as const
