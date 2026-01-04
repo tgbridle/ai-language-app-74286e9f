@@ -105,7 +105,7 @@ export function SearchBar({ onSelectEntry }: SearchBarProps) {
           onChange={(e) => setQuery(e.target.value)}
           onKeyDown={handleKeyDown}
           onFocus={() => query.length > 0 && suggestions.length > 0 && setIsOpen(true)}
-          className="pl-12 pr-12 h-14 text-lg border-2 border-border bg-card shadow-sm focus-visible:ring-primary"
+          className="pl-12 pr-12 h-14 text-lg border-2 border-border bg-card shadow-sm focus-visible:ring-primary placeholder:text-muted-foreground/50"
           aria-label="Search dictionary"
           aria-autocomplete="list"
           aria-expanded={isOpen}

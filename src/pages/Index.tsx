@@ -10,8 +10,9 @@ const Index = () => {
       <div className="container mx-auto px-4 py-8 sm:py-12">
         {/* Header */}
         <header className="text-center mb-10 sm:mb-14">
-          <h1 className="text-3xl sm:text-4xl font-bold text-foreground tracking-tight mb-2">Langly</h1>
-          <p className="text-muted-foreground text-lg max-w-md mx-auto">Lookup, understand, apply. Your companion for learning a language.</p>
+          <h1 className="text-3xl sm:text-4xl font-bold text-foreground tracking-tight mb-3">Langly</h1>
+          <p className="text-foreground/80 text-lg font-medium">Lookup, understand, apply.</p>
+          <p className="text-muted-foreground text-base mt-1">Your word companion for learning a language.</p>
         </header>
 
         {/* Main Content */}
@@ -22,9 +23,9 @@ const Index = () => {
             <div className="space-y-8">
               <SearchBar onSelectEntry={setSelectedEntryId} />
               
-              {/* Hint */}
-              <div className="text-center text-muted-foreground text-sm">
-                <p>Try searching: <span className="font-medium">sein</span>, <span className="font-medium">gut</span>, <span className="font-medium">mit</span>, or <span className="font-medium">to have</span></p>
+              {/* Discovery hint */}
+              <div className="text-center text-muted-foreground/80 text-sm">
+                <p>Explore everything from verbs to prepositions. Try: <span className="font-medium text-foreground/70">sein</span>, <span className="font-medium text-foreground/70">Hund</span>, <span className="font-medium text-foreground/70">mit</span>, or <span className="font-medium text-foreground/70">to have</span>...</p>
               </div>
             </div>
           )}
