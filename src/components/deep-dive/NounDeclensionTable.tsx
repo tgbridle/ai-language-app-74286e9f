@@ -1,4 +1,3 @@
-import type { Noun } from '@/types/noun';
 import {
   Table,
   TableBody,
@@ -8,8 +7,20 @@ import {
   TableRow,
 } from '@/components/ui/table';
 
-interface DeclensionTableProps {
-  noun: Noun;
+interface NounDeclension {
+  nom_sg: string;
+  acc_sg: string;
+  dat_sg: string;
+  gen_sg: string;
+  nom_pl: string | null;
+  acc_pl: string | null;
+  dat_pl: string | null;
+  gen_pl: string | null;
+}
+
+interface NounDeclensionTableProps {
+  declension: NounDeclension;
+  article: string;
 }
 
 const CASES = [
@@ -19,8 +30,8 @@ const CASES = [
   { key: 'gen', label: 'Genitive', abbr: 'GEN' },
 ] as const;
 
-export function DeclensionTable({ noun }: DeclensionTableProps) {
-  const hasPluralForms = noun.nom_pl || noun.acc_pl || noun.dat_pl || noun.gen_pl;
+export function NounDeclensionTable({ declension, article }: NounDeclensionTableProps) {
+  const hasPluralForms = declension.nom_pl || declension.acc_pl || declension.dat_pl || declension.gen_pl;
 
   return (
     <div className="overflow-x-auto">
@@ -36,10 +47,10 @@ export function DeclensionTable({ noun }: DeclensionTableProps) {
         </TableHeader>
         <TableBody>
           {CASES.map((caseItem) => {
-            const sgKey = `${caseItem.key}_sg` as keyof Noun;
-            const plKey = `${caseItem.key}_pl` as keyof Noun;
-            const singularForm = noun[sgKey] as string;
-            const pluralForm = noun[plKey] as string | null;
+            const sgKey = `${caseItem.key}_sg` as keyof NounDeclension;
+            const plKey = `${caseItem.key}_pl` as keyof NounDeclension;
+            const singularForm = declension[sgKey] as string;
+            const pluralForm = declension[plKey] as string | null;
 
             return (
               <TableRow key={caseItem.key} className="border-border">
@@ -48,7 +59,7 @@ export function DeclensionTable({ noun }: DeclensionTableProps) {
                   <span className="sm:hidden">{caseItem.abbr}</span>
                 </TableCell>
                 <TableCell className="font-medium">
-                  <span className="text-primary">{noun.article}</span>{' '}
+                  <span className="text-primary">{article}</span>{' '}
                   <span className="text-foreground">{singularForm}</span>
                 </TableCell>
                 {hasPluralForms && (

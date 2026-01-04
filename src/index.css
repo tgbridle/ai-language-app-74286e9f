@@ -55,6 +55,16 @@
     --sidebar-accent-foreground: 240 5.9% 10%;
     --sidebar-border: 220 13% 91%;
     --sidebar-ring: 217.2 91.2% 59.8%;
+
+    /* Word Type Colors - Non-clashing with Gender (Red/Blue/Green) */
+    --wordtype-noun: 215 14% 45%;
+    --wordtype-verb: 270 50% 45%;
+    --wordtype-adjective: 35 80% 50%;
+    --wordtype-adverb: 175 50% 40%;
+    --wordtype-pronoun: 320 50% 50%;
+    --wordtype-preposition: 240 50% 55%;
+    --wordtype-conjunction: 45 85% 45%;
+    --wordtype-article: 25 35% 40%;
   }
 
   .dark {
@@ -100,6 +110,16 @@
     --sidebar-accent-foreground: 240 4.8% 95.9%;
     --sidebar-border: 222 30% 22%;
     --sidebar-ring: 217.2 91.2% 59.8%;
+
+    /* Word Type Colors - Dark mode */
+    --wordtype-noun: 215 14% 60%;
+    --wordtype-verb: 270 50% 65%;
+    --wordtype-adjective: 35 80% 60%;
+    --wordtype-adverb: 175 50% 55%;
+    --wordtype-pronoun: 320 50% 60%;
+    --wordtype-preposition: 240 50% 65%;
+    --wordtype-conjunction: 45 85% 55%;
+    --wordtype-article: 25 35% 55%;
   }
 }
 

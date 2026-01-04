@@ -1,19 +1,21 @@
 import { useState, useRef, useEffect } from 'react';
 import { Search, X, Loader2 } from 'lucide-react';
 import { Input } from '@/components/ui/input';
-import { useNounSearch } from '@/hooks/useNounSearch';
-import type { NounSuggestion } from '@/types/noun';
+import { useDictionarySearch } from '@/hooks/useDictionarySearch';
+import type { DictionarySuggestion } from '@/types/dictionary';
 import { cn } from '@/lib/utils';
+import { WORD_TYPE_COLORS } from '@/lib/wordTypeColors';
+import { isNounMetadata } from '@/types/dictionary';
 
 interface SearchBarProps {
-  onSelectNoun: (nounId: string) => void;
+  onSelectEntry: (entryId: string) => void;
 }
 
-export function SearchBar({ onSelectNoun }: SearchBarProps) {
+export function SearchBar({ onSelectEntry }: SearchBarProps) {
   const [query, setQuery] = useState('');
   const [isOpen, setIsOpen] = useState(false);
   const [highlightedIndex, setHighlightedIndex] = useState(-1);
-  const { suggestions, isLoading } = useNounSearch(query);
+  const { suggestions, isLoading, searchTerm, isGerman } = useDictionarySearch(query);
   const inputRef = useRef<HTMLInputElement>(null);
   const listRef = useRef<HTMLUListElement>(null);
 
@@ -22,8 +24,8 @@ export function SearchBar({ onSelectNoun }: SearchBarProps) {
     setHighlightedIndex(-1);
   }, [suggestions, query]);
 
-  const handleSelect = (suggestion: NounSuggestion) => {
-    onSelectNoun(suggestion.id);
+  const handleSelect = (suggestion: DictionarySuggestion) => {
+    onSelectEntry(suggestion.id);
     setQuery('');
     setIsOpen(false);
   };
@@ -61,6 +63,36 @@ export function SearchBar({ onSelectNoun }: SearchBarProps) {
     inputRef.current?.focus();
   };
 
+  // Format suggestion based on search language
+  const formatSuggestion = (suggestion: DictionarySuggestion) => {
+    const article = suggestion.word_type === 'noun' && isNounMetadata(suggestion.metadata) 
+      ? suggestion.metadata.article + ' ' 
+      : '';
+    const germanPart = `${article}${suggestion.german_word}`;
+    const englishPart = suggestion.english_translation;
+    const typePart = suggestion.word_type;
+
+    if (isGerman) {
+      // German input: bold German, muted English
+      return (
+        <>
+          <span className="font-semibold text-foreground">{germanPart}</span>
+          <span className={cn("text-xs ml-1", WORD_TYPE_COLORS[typePart].text)}>({typePart})</span>
+          <span className="text-muted-foreground ml-2">— {englishPart}</span>
+        </>
+      );
+    } else {
+      // English input: bold English, muted German
+      return (
+        <>
+          <span className="font-semibold text-foreground">{englishPart}</span>
+          <span className="text-muted-foreground ml-2">— {germanPart}</span>
+          <span className={cn("text-xs ml-1", WORD_TYPE_COLORS[typePart].text)}>({typePart})</span>
+        </>
+      );
+    }
+  };
+
   return (
     <div className="relative w-full max-w-xl mx-auto">
       <div className="relative">
@@ -68,13 +100,13 @@ export function SearchBar({ onSelectNoun }: SearchBarProps) {
         <Input
           ref={inputRef}
           type="text"
-          placeholder="Search German nouns..."
+          placeholder="Search German or English..."
           value={query}
           onChange={(e) => setQuery(e.target.value)}
           onKeyDown={handleKeyDown}
           onFocus={() => query.length > 0 && suggestions.length > 0 && setIsOpen(true)}
           className="pl-12 pr-12 h-14 text-lg border-2 border-border bg-card shadow-sm focus-visible:ring-primary"
-          aria-label="Search German nouns"
+          aria-label="Search dictionary"
           aria-autocomplete="list"
           aria-expanded={isOpen}
           aria-controls="search-suggestions"
@@ -115,15 +147,7 @@ export function SearchBar({ onSelectNoun }: SearchBarProps) {
                   : "hover:bg-accent/50"
               )}
             >
-              <span className="font-semibold text-primary">
-                {suggestion.article}
-              </span>{' '}
-              <span className="font-medium text-foreground">
-                {suggestion.lemma}
-              </span>
-              <span className="text-muted-foreground ml-2">
-                — {suggestion.english_meaning}
-              </span>
+              {formatSuggestion(suggestion)}
             </li>
           ))}
         </ul>
