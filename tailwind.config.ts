@@ -57,6 +57,16 @@ export default {
           border: "hsl(var(--sidebar-border))",
           ring: "hsl(var(--sidebar-ring))",
         },
+        wordtype: {
+          noun: "hsl(var(--wordtype-noun))",
+          verb: "hsl(var(--wordtype-verb))",
+          adjective: "hsl(var(--wordtype-adjective))",
+          adverb: "hsl(var(--wordtype-adverb))",
+          pronoun: "hsl(var(--wordtype-pronoun))",
+          preposition: "hsl(var(--wordtype-preposition))",
+          conjunction: "hsl(var(--wordtype-conjunction))",
+          article: "hsl(var(--wordtype-article))",
+        },
       },
       borderRadius: {
         lg: "var(--radius)",
