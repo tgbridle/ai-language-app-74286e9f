@@ -40,12 +40,18 @@ export function SearchBar({ onSelectEntry }: SearchBarProps) {
   };
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
-    if (!isOpen) return;
+    // If results exist, allow ArrowDown/ArrowUp to open the list and start navigation
+    const isNavKey = e.key === 'ArrowDown' || e.key === 'ArrowUp';
+    if (!isOpen && isNavKey && suggestions.length > 0) {
+      setIsOpen(true);
+    }
+
+    if (!isOpen && !isNavKey) return;
 
     switch (e.key) {
       case 'ArrowDown':
         e.preventDefault();
-        setHighlightedIndex((prev) => 
+        setHighlightedIndex((prev) =>
           prev < suggestions.length - 1 ? prev + 1 : prev
         );
         break;
@@ -112,7 +118,7 @@ export function SearchBar({ onSelectEntry }: SearchBarProps) {
           placeholder="Search German or English..."
           value={query}
           onChange={(e) => setQuery(e.target.value)}
-          onKeyDown={handleKeyDown}
+          onKeyDownCapture={handleKeyDown}
           onFocus={() => query.length > 0 && suggestions.length > 0 && setIsOpen(true)}
           className="pl-12 pr-12 h-14 text-lg border-2 border-border bg-card shadow-sm focus-visible:ring-primary placeholder:text-muted-foreground/50"
           aria-label="Search dictionary"
