@@ -46,7 +46,8 @@ export function useDictionarySearch(query: string) {
 
   useEffect(() => {
     const searchDictionary = async () => {
-      if (searchTerm.length < 1) {
+      // Require at least 2 characters for meaningful search
+      if (searchTerm.length < 2) {
         setSuggestions([]);
         return;
       }
