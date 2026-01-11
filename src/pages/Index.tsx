@@ -8,24 +8,26 @@ const Index = () => {
 
   return (
     <div className="min-h-screen bg-background">
-      <div className="container mx-auto px-4 py-8 sm:py-12">
+      <div className="container mx-auto px-4 py-10 sm:py-16">
         {selectedEntryId ? (
           <WordDeepDive entryId={selectedEntryId} onBack={() => setSelectedEntryId(null)} />
         ) : (
           <main className="max-w-2xl mx-auto">
-            {/* Branding Section */}
-            <header className="text-center mb-8 sm:mb-10">
-              {/* Logo + Brand Name */}
-              <div className="flex items-center justify-center gap-3 mb-3">
+            {/* Hero Branding Section */}
+            <header className="text-center mb-10 sm:mb-12">
+              {/* Large Logo */}
+              <div className="flex justify-center mb-6">
                 <LanglyLogo size="lg" />
-                <h1 className="text-3xl sm:text-4xl font-bold text-foreground tracking-tight">
-                  Langly
-                </h1>
               </div>
               
-              {/* Tagline - swapped order, both grey */}
-              <p className="text-muted-foreground text-lg">Your language learning companion.</p>
-              <p className="text-muted-foreground text-lg mt-1">Search, learn, use.</p>
+              {/* Brand Name */}
+              <h1 className="text-4xl sm:text-5xl font-bold text-foreground tracking-tight mb-4">
+                Langly
+              </h1>
+              
+              {/* Tagline */}
+              <p className="text-muted-foreground text-lg sm:text-xl">Your language learning companion.</p>
+              <p className="text-muted-foreground text-lg sm:text-xl mt-1">Search, learn, use.</p>
             </header>
 
             {/* Search Section */}

@@ -2,14 +2,15 @@ import langlyLogo from '@/assets/langly-logo.png';
 import { cn } from '@/lib/utils';
 
 interface LanglyLogoProps {
-  size?: 'sm' | 'lg';
+  size?: 'sm' | 'md' | 'lg';
   className?: string;
 }
 
 export function LanglyLogo({ size = 'lg', className }: LanglyLogoProps) {
   const sizeClasses = {
-    sm: 'w-7 h-7',
-    lg: 'w-12 h-12',
+    sm: 'w-8 h-8',
+    md: 'w-10 h-10',
+    lg: 'w-20 h-20 sm:w-24 sm:h-24',
   };
 
   return (
