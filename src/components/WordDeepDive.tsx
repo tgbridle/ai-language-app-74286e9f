@@ -12,6 +12,7 @@ import {
   isPronounMetadata,
   isArticleMetadata,
   isAdjectiveMetadata,
+  isAdverbMetadata,
 } from '@/types/dictionary';
 import { NounDeclensionTable } from '@/components/deep-dive/NounDeclensionTable';
 import { VerbConjugationTable } from '@/components/deep-dive/VerbConjugationTable';
@@ -19,6 +20,7 @@ import { PronounDeclensionTable } from '@/components/deep-dive/PronounDeclension
 import { ArticleDeclensionTable } from '@/components/deep-dive/ArticleDeclensionTable';
 import { AdjectiveComparisonTable } from '@/components/deep-dive/AdjectiveComparisonTable';
 import { PrepositionDeepDive } from '@/components/deep-dive/PrepositionDeepDive';
+import { AdverbDeepDive } from '@/components/deep-dive/AdverbDeepDive';
 import { LanglyLogo } from '@/components/LanglyLogo';
 
 interface WordDeepDiveProps {
@@ -263,6 +265,33 @@ export function WordDeepDive({ entryId, onBack }: WordDeepDiveProps) {
         </header>
 
         <PrepositionDeepDive
+          germanWord={entry.german_word}
+          englishTranslation={entry.english_translation}
+          metadata={entry.metadata}
+          grammarNote={entry.grammar_note}
+        />
+      </div>
+    );
+  }
+
+  // Adverb gets its own dedicated layout
+  if (entry.word_type === 'adverb' && isAdverbMetadata(entry.metadata)) {
+    return (
+      <div className="w-full max-w-2xl mx-auto animate-in fade-in slide-in-from-bottom-4 duration-300">
+        {/* Top Header Bar */}
+        <header className="flex items-center justify-between mb-8">
+          <Button onClick={onBack} variant="ghost" className="text-muted-foreground hover:text-foreground -ml-2">
+            <ArrowLeft className="h-4 w-4 mr-2" />
+            Back
+          </Button>
+          <div className="flex items-center gap-1">
+            <LanglyLogo size="md" />
+            <span className="font-bold text-foreground text-lg">Langly</span>
+          </div>
+          <div className="w-16" /> {/* Spacer for centering */}
+        </header>
+
+        <AdverbDeepDive
           germanWord={entry.german_word}
           englishTranslation={entry.english_translation}
           metadata={entry.metadata}
