@@ -3,11 +3,20 @@ import { supabase } from '@/integrations/supabase/client';
 import type { DictionarySuggestion, WordType, DictionaryMetadata } from '@/types/dictionary';
 
 const GERMAN_ARTICLES = ['der', 'die', 'das', 'den', 'dem', 'des', 'ein', 'eine', 'einen', 'einem', 'einer', 'eines'];
+const ENGLISH_ARTICLES = ['the', 'a', 'an'];
 
 function extractSearchTerm(query: string): string {
   const trimmed = query.trim().toLowerCase();
   
+  // Strip German articles
   for (const article of GERMAN_ARTICLES) {
+    if (trimmed.startsWith(article + ' ')) {
+      return query.trim().slice(article.length + 1).trim();
+    }
+  }
+  
+  // Strip English articles
+  for (const article of ENGLISH_ARTICLES) {
     if (trimmed.startsWith(article + ' ')) {
       return query.trim().slice(article.length + 1).trim();
     }
