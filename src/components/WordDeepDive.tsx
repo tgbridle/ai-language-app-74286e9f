@@ -50,10 +50,10 @@ export function WordDeepDive({ entryId, onBack }: WordDeepDiveProps) {
             <ArrowLeft className="h-4 w-4 mr-2" />
             Back
           </Button>
-          <div className="flex items-center gap-2">
-            <LanglyLogo size="sm" />
-            <span className="font-bold text-foreground">Langly</span>
-          </div>
+        <div className="flex items-center gap-2">
+          <LanglyLogo size="sm" />
+          <span className="font-bold text-foreground text-lg">Langly</span>
+        </div>
           <div className="w-16" /> {/* Spacer for centering */}
         </header>
         
