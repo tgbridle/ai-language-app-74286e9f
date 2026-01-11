@@ -14,7 +14,7 @@ import {
   isAdjectiveMetadata,
 } from '@/types/dictionary';
 import { NounDeclensionTable } from '@/components/deep-dive/NounDeclensionTable';
-import { VerbConjugationGrid } from '@/components/deep-dive/VerbConjugationGrid';
+import { VerbConjugationTable } from '@/components/deep-dive/VerbConjugationTable';
 import { PronounDeclensionTable } from '@/components/deep-dive/PronounDeclensionTable';
 import { ArticleDeclensionTable } from '@/components/deep-dive/ArticleDeclensionTable';
 
@@ -79,8 +79,8 @@ export function WordDeepDive({ entryId, onBack }: WordDeepDiveProps) {
                   Present Tense Conjugation
                 </CardTitle>
               </CardHeader>
-              <CardContent>
-                <VerbConjugationGrid conjugation={entry.metadata.conjugation} />
+              <CardContent className="pt-0">
+                <VerbConjugationTable conjugation={entry.metadata.conjugation} />
               </CardContent>
             </Card>
           );
