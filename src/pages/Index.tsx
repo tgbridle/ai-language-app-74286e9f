@@ -14,24 +14,22 @@ const Index = () => {
         ) : (
           <main className="max-w-2xl mx-auto">
             {/* Branding Section */}
-            <header className="text-center mb-10 sm:mb-14">
-              {/* Logo Icon */}
-              <div className="flex justify-center mb-5">
+            <header className="text-center mb-8 sm:mb-10">
+              {/* Logo + Brand Name */}
+              <div className="flex items-center justify-center gap-3 mb-3">
                 <LanglyLogo size="lg" />
+                <h1 className="text-3xl sm:text-4xl font-bold text-foreground tracking-tight">
+                  Langly
+                </h1>
               </div>
               
-              {/* Brand Name */}
-              <h1 className="text-3xl sm:text-4xl font-bold text-foreground tracking-tight mb-3">
-                Langly
-              </h1>
-              
-              {/* Tagline */}
-              <p className="text-foreground text-lg font-medium">Search, learn, use.</p>
-              <p className="text-muted-foreground text-lg mt-1">Your language companion.</p>
+              {/* Tagline - swapped order, both grey */}
+              <p className="text-muted-foreground text-lg">Your language learning companion.</p>
+              <p className="text-muted-foreground text-lg mt-1">Search, learn, use.</p>
             </header>
 
             {/* Search Section */}
-            <div className="space-y-8">
+            <div className="space-y-6">
               <SearchBar onSelectEntry={setSelectedEntryId} />
               
               {/* Discovery hint */}
