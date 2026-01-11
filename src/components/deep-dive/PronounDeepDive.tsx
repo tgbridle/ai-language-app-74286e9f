@@ -1,0 +1,109 @@
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from '@/components/ui/table';
+import { PronounMetadata } from '@/types/dictionary';
+
+interface PronounDeepDiveProps {
+  germanWord: string;
+  englishTranslation: string;
+  metadata: PronounMetadata;
+  grammarNote: string | null;
+}
+
+const CASES = [
+  { key: 'nominative', label: 'Nominative', abbr: 'NOM' },
+  { key: 'accusative', label: 'Accusative', abbr: 'ACC' },
+  { key: 'dative', label: 'Dative', abbr: 'DAT' },
+] as const;
+
+type CaseKey = typeof CASES[number]['key'];
+
+export function PronounDeepDive({ 
+  germanWord, 
+  englishTranslation, 
+  metadata,
+  grammarNote 
+}: PronounDeepDiveProps) {
+  return (
+    <div className="space-y-6">
+      {/* Header Card */}
+      <Card className="border border-border shadow-sm">
+        <CardHeader className="pb-4">
+          <div className="flex items-start justify-between gap-4 flex-wrap">
+            <div>
+              <CardTitle className="text-3xl sm:text-4xl font-bold tracking-tight text-foreground">
+                {germanWord}
+              </CardTitle>
+              <p className="text-xl text-muted-foreground mt-2">
+                {englishTranslation}
+              </p>
+            </div>
+            <span className="px-3 py-1 rounded-full text-sm font-medium capitalize bg-fuchsia-100 text-fuchsia-700 dark:bg-fuchsia-900/30 dark:text-fuchsia-400">
+              Pronoun
+            </span>
+          </div>
+        </CardHeader>
+      </Card>
+
+      {/* Declension Table */}
+      <Card className="border border-border shadow-sm">
+        <CardHeader>
+          <CardTitle className="text-lg font-semibold text-foreground">
+            Case Declension
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="overflow-x-auto">
+            <Table>
+              <TableHeader>
+                <TableRow className="border-border">
+                  <TableHead className="w-1/3 font-semibold text-muted-foreground">Case</TableHead>
+                  <TableHead className="w-1/3 font-semibold text-muted-foreground">German</TableHead>
+                  <TableHead className="w-1/3 font-semibold text-muted-foreground">English</TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                {CASES.map((caseItem) => (
+                  <TableRow key={caseItem.key} className="border-border">
+                    <TableCell className="font-medium text-muted-foreground">
+                      <span className="hidden sm:inline">{caseItem.label}</span>
+                      <span className="sm:hidden">{caseItem.abbr}</span>
+                    </TableCell>
+                    <TableCell className="font-semibold text-foreground">
+                      {metadata.declension[caseItem.key as CaseKey]}
+                    </TableCell>
+                    <TableCell className="text-muted-foreground">
+                      {caseItem.key === 'nominative' ? englishTranslation : '—'}
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </div>
+        </CardContent>
+      </Card>
+
+      {/* Grammar Insight */}
+      {grammarNote && (
+        <Card className="border border-border shadow-sm border-l-4 border-l-fuchsia-500">
+          <CardHeader className="pb-2">
+            <CardTitle className="text-lg font-semibold text-foreground">
+              Grammar Insight
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <p className="text-foreground leading-relaxed">
+              {grammarNote}
+            </p>
+          </CardContent>
+        </Card>
+      )}
+    </div>
+  );
+}
