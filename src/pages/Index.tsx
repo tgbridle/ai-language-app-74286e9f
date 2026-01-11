@@ -16,7 +16,7 @@ const Index = () => {
             {/* Hero Branding Section */}
             <header className="text-center mb-10 sm:mb-12">
               {/* Large Logo */}
-              <div className="flex justify-center mb-6">
+              <div className="flex justify-center mb-3">
                 <LanglyLogo size="lg" />
               </div>
               
