@@ -17,6 +17,7 @@ import { NounDeclensionTable } from '@/components/deep-dive/NounDeclensionTable'
 import { VerbConjugationTable } from '@/components/deep-dive/VerbConjugationTable';
 import { PronounDeclensionTable } from '@/components/deep-dive/PronounDeclensionTable';
 import { ArticleDeclensionTable } from '@/components/deep-dive/ArticleDeclensionTable';
+import { AdjectiveComparisonTable } from '@/components/deep-dive/AdjectiveComparisonTable';
 import { LanglyLogo } from '@/components/LanglyLogo';
 
 interface WordDeepDiveProps {
@@ -186,38 +187,22 @@ export function WordDeepDive({ entryId, onBack }: WordDeepDiveProps) {
 
       case 'adjective':
         if (isAdjectiveMetadata(entry.metadata)) {
-          const { comparative, superlative } = entry.metadata;
-          if (comparative || superlative) {
-            return (
-              <Card className="border border-border shadow-sm">
-                <CardHeader>
-                  <CardTitle className="text-lg font-semibold text-foreground">
-                    Comparison
-                  </CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <div className="grid grid-cols-3 gap-4 text-center">
-                    <div>
-                      <p className="text-xs text-muted-foreground mb-1">Positive</p>
-                      <p className="font-medium">{entry.german_word}</p>
-                    </div>
-                    {comparative && (
-                      <div>
-                        <p className="text-xs text-muted-foreground mb-1">Comparative</p>
-                        <p className="font-medium">{comparative}</p>
-                      </div>
-                    )}
-                    {superlative && (
-                      <div>
-                        <p className="text-xs text-muted-foreground mb-1">Superlative</p>
-                        <p className="font-medium">{superlative}</p>
-                      </div>
-                    )}
-                  </div>
-                </CardContent>
-              </Card>
-            );
-          }
+          return (
+            <Card className="border border-border shadow-sm">
+              <CardHeader>
+                <CardTitle className="text-lg font-semibold text-foreground">
+                  Comparison (Steigerung)
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <AdjectiveComparisonTable
+                  baseWord={entry.german_word}
+                  comparative={entry.metadata.comparative}
+                  superlative={entry.metadata.superlative}
+                />
+              </CardContent>
+            </Card>
+          );
         }
         break;
     }
