@@ -80,9 +80,17 @@ export function SearchBar({ onSelectEntry }: SearchBarProps) {
 
   // Format suggestion based on search language
   const formatSuggestion = (suggestion: DictionarySuggestion) => {
-    const article = suggestion.word_type === 'noun' && isNounMetadata(suggestion.metadata) 
-      ? suggestion.metadata.article + ' ' 
-      : '';
+    // Extract article from declensions for nouns
+    let article = '';
+    if (suggestion.word_type === 'noun' && isNounMetadata(suggestion.metadata)) {
+      const nomSingular = suggestion.metadata.declensions?.singular?.nominative;
+      if (nomSingular) {
+        const parts = nomSingular.split(' ');
+        if (parts.length >= 2) {
+          article = parts[0] + ' ';
+        }
+      }
+    }
     const germanPart = `${article}${suggestion.german_word}`;
     const englishPart = suggestion.english_translation;
     const typePart = suggestion.word_type;
