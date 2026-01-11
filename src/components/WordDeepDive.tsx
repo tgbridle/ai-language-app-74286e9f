@@ -52,6 +52,22 @@ export function WordDeepDive({ entryId, onBack }: WordDeepDiveProps) {
     switch (entry.word_type) {
       case 'noun':
         if (isNounMetadata(entry.metadata)) {
+          // Graceful fallback if declensions not yet migrated
+          if (!entry.metadata.declensions) {
+            return (
+              <Card className="border-2 border-border">
+                <CardHeader>
+                  <CardTitle className="text-lg font-semibold text-foreground">
+                    Declension Table
+                  </CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <Skeleton className="h-32 w-full" />
+                  <p className="text-muted-foreground text-sm mt-2">Loading declension data...</p>
+                </CardContent>
+              </Card>
+            );
+          }
           return (
             <Card className="border-2 border-border">
               <CardHeader>
@@ -61,8 +77,8 @@ export function WordDeepDive({ entryId, onBack }: WordDeepDiveProps) {
               </CardHeader>
               <CardContent>
                 <NounDeclensionTable 
-                  declension={entry.metadata.declension} 
-                  article={entry.metadata.article}
+                  declensions={entry.metadata.declensions} 
+                  gender={entry.metadata.gender}
                 />
               </CardContent>
             </Card>
@@ -197,12 +213,19 @@ export function WordDeepDive({ entryId, onBack }: WordDeepDiveProps) {
   const getHeaderDisplay = () => {
     if (entry.word_type === 'noun' && isNounMetadata(entry.metadata)) {
       const genderTextClass = GENDER_TEXT_COLORS[entry.metadata.gender];
-      return (
-        <>
-          <span className={genderTextClass}>{entry.metadata.article}</span>{' '}
-          <span className="text-foreground">{entry.german_word}</span>
-        </>
-      );
+      // Use nominative singular from declensions if available
+      if (entry.metadata.declensions?.singular?.nominative) {
+        const nomSingular = entry.metadata.declensions.singular.nominative;
+        const [article, ...rest] = nomSingular.split(' ');
+        return (
+          <>
+            <span className={genderTextClass}>{article}</span>{' '}
+            <span className="text-foreground">{rest.join(' ')}</span>
+          </>
+        );
+      }
+      // Fallback to german_word
+      return <span className="text-foreground">{entry.german_word}</span>;
     }
     return <span className="text-foreground">{entry.german_word}</span>;
   };

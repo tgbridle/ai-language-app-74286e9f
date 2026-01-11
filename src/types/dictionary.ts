@@ -1,18 +1,23 @@
 export type WordType = 'noun' | 'verb' | 'adjective' | 'adverb' | 'pronoun' | 'preposition' | 'conjunction' | 'article';
 
+export interface NounDeclensions {
+  singular: {
+    nominative: string;
+    accusative: string;
+    dative: string;
+    genitive: string;
+  };
+  plural: {
+    nominative: string | null;
+    accusative: string | null;
+    dative: string | null;
+    genitive: string | null;
+  } | null;
+}
+
 export interface NounMetadata {
   gender: 'masculine' | 'feminine' | 'neuter';
-  article: 'der' | 'die' | 'das';
-  declension: {
-    nom_sg: string;
-    acc_sg: string;
-    dat_sg: string;
-    gen_sg: string;
-    nom_pl: string | null;
-    acc_pl: string | null;
-    dat_pl: string | null;
-    gen_pl: string | null;
-  };
+  declensions: NounDeclensions;
 }
 
 export interface VerbMetadata {
@@ -97,7 +102,7 @@ export interface DictionarySuggestion {
 
 // Type guards for metadata
 export function isNounMetadata(metadata: DictionaryMetadata): metadata is NounMetadata {
-  return 'gender' in metadata && 'declension' in metadata;
+  return 'gender' in metadata && 'declensions' in metadata;
 }
 
 export function isVerbMetadata(metadata: DictionaryMetadata): metadata is VerbMetadata {

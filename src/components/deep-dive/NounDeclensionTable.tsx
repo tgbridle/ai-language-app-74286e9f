@@ -6,32 +6,41 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table';
-
-interface NounDeclension {
-  nom_sg: string;
-  acc_sg: string;
-  dat_sg: string;
-  gen_sg: string;
-  nom_pl: string | null;
-  acc_pl: string | null;
-  dat_pl: string | null;
-  gen_pl: string | null;
-}
+import { NounDeclensions } from '@/types/dictionary';
+import { GENDER_TEXT_COLORS } from '@/lib/wordTypeColors';
 
 interface NounDeclensionTableProps {
-  declension: NounDeclension;
-  article: string;
+  declensions: NounDeclensions;
+  gender: 'masculine' | 'feminine' | 'neuter';
 }
 
 const CASES = [
-  { key: 'nom', label: 'Nominative', abbr: 'NOM' },
-  { key: 'acc', label: 'Accusative', abbr: 'ACC' },
-  { key: 'dat', label: 'Dative', abbr: 'DAT' },
-  { key: 'gen', label: 'Genitive', abbr: 'GEN' },
+  { key: 'nominative', label: 'Nominative', abbr: 'NOM' },
+  { key: 'accusative', label: 'Accusative', abbr: 'ACC' },
+  { key: 'dative', label: 'Dative', abbr: 'DAT' },
+  { key: 'genitive', label: 'Genitive', abbr: 'GEN' },
 ] as const;
 
-export function NounDeclensionTable({ declension, article }: NounDeclensionTableProps) {
-  const hasPluralForms = declension.nom_pl || declension.acc_pl || declension.dat_pl || declension.gen_pl;
+type CaseKey = typeof CASES[number]['key'];
+
+// Parse "der Hund" into { article: "der", noun: "Hund" }
+function parseArticulatedForm(form: string | null): { article: string; noun: string } | null {
+  if (!form) return null;
+  const parts = form.split(' ');
+  if (parts.length < 2) return { article: '', noun: form };
+  const [article, ...rest] = parts;
+  return { article, noun: rest.join(' ') };
+}
+
+export function NounDeclensionTable({ declensions, gender }: NounDeclensionTableProps) {
+  const hasPluralForms = declensions.plural && (
+    declensions.plural.nominative || 
+    declensions.plural.accusative || 
+    declensions.plural.dative || 
+    declensions.plural.genitive
+  );
+
+  const genderTextClass = GENDER_TEXT_COLORS[gender];
 
   return (
     <div className="overflow-x-auto">
@@ -47,10 +56,11 @@ export function NounDeclensionTable({ declension, article }: NounDeclensionTable
         </TableHeader>
         <TableBody>
           {CASES.map((caseItem) => {
-            const sgKey = `${caseItem.key}_sg` as keyof NounDeclension;
-            const plKey = `${caseItem.key}_pl` as keyof NounDeclension;
-            const singularForm = declension[sgKey] as string;
-            const pluralForm = declension[plKey] as string | null;
+            const singularForm = declensions.singular[caseItem.key as CaseKey];
+            const pluralForm = declensions.plural?.[caseItem.key as CaseKey] ?? null;
+
+            const parsedSingular = parseArticulatedForm(singularForm);
+            const parsedPlural = parseArticulatedForm(pluralForm);
 
             return (
               <TableRow key={caseItem.key} className="border-border">
@@ -59,15 +69,21 @@ export function NounDeclensionTable({ declension, article }: NounDeclensionTable
                   <span className="sm:hidden">{caseItem.abbr}</span>
                 </TableCell>
                 <TableCell className="font-medium">
-                  <span className="text-primary">{article}</span>{' '}
-                  <span className="text-foreground">{singularForm}</span>
+                  {parsedSingular ? (
+                    <>
+                      <span className={genderTextClass}>{parsedSingular.article}</span>{' '}
+                      <span className="text-foreground">{parsedSingular.noun}</span>
+                    </>
+                  ) : (
+                    <span className="text-muted-foreground italic">—</span>
+                  )}
                 </TableCell>
                 {hasPluralForms && (
                   <TableCell className="font-medium">
-                    {pluralForm ? (
+                    {parsedPlural ? (
                       <>
-                        <span className="text-primary">die</span>{' '}
-                        <span className="text-foreground">{pluralForm}</span>
+                        <span className={genderTextClass}>{parsedPlural.article}</span>{' '}
+                        <span className="text-foreground">{parsedPlural.noun}</span>
                       </>
                     ) : (
                       <span className="text-muted-foreground italic">—</span>
