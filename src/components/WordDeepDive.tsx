@@ -4,7 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Skeleton } from '@/components/ui/skeleton';
 import { useDictionaryDetails } from '@/hooks/useDictionaryDetails';
 import { cn } from '@/lib/utils';
-import { WORD_TYPE_COLORS, GENDER_COLORS, GENDER_TEXT_COLORS, CASE_COLORS } from '@/lib/wordTypeColors';
+import { WORD_TYPE_COLORS, GENDER_COLORS, GENDER_TEXT_COLORS } from '@/lib/wordTypeColors';
 import { 
   isNounMetadata, 
   isVerbMetadata, 
@@ -18,6 +18,7 @@ import { VerbConjugationTable } from '@/components/deep-dive/VerbConjugationTabl
 import { PronounDeclensionTable } from '@/components/deep-dive/PronounDeclensionTable';
 import { ArticleDeclensionTable } from '@/components/deep-dive/ArticleDeclensionTable';
 import { AdjectiveComparisonTable } from '@/components/deep-dive/AdjectiveComparisonTable';
+import { PrepositionDeepDive } from '@/components/deep-dive/PrepositionDeepDive';
 import { LanglyLogo } from '@/components/LanglyLogo';
 
 interface WordDeepDiveProps {
@@ -122,32 +123,9 @@ export function WordDeepDive({ entryId, onBack }: WordDeepDiveProps) {
 
       case 'preposition':
         if (isPrepositionMetadata(entry.metadata)) {
-          return (
-            <Card className="border border-border shadow-sm">
-              <CardHeader>
-                <CardTitle className="text-lg font-semibold text-foreground">
-                  Case Requirement
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="flex items-center gap-3">
-                  <span
-                    className={cn(
-                      'px-4 py-2 rounded-lg text-sm font-semibold capitalize border',
-                      CASE_COLORS[entry.metadata.case]
-                    )}
-                  >
-                    Requires {entry.metadata.case === 'two-way' ? 'Accusative/Dative' : entry.metadata.case}
-                  </span>
-                </div>
-                {entry.metadata.note && (
-                  <p className="mt-3 text-muted-foreground text-sm">
-                    {entry.metadata.note}
-                  </p>
-                )}
-              </CardContent>
-            </Card>
-          );
+          // Preposition has its own full-page component - return null here
+          // The parent will render PrepositionDeepDive instead
+          return null;
         }
         break;
 
@@ -266,6 +244,33 @@ export function WordDeepDive({ entryId, onBack }: WordDeepDiveProps) {
       </span>
     );
   };
+
+  // Preposition gets its own dedicated layout
+  if (entry.word_type === 'preposition' && isPrepositionMetadata(entry.metadata)) {
+    return (
+      <div className="w-full max-w-2xl mx-auto animate-in fade-in slide-in-from-bottom-4 duration-300">
+        {/* Top Header Bar */}
+        <header className="flex items-center justify-between mb-8">
+          <Button onClick={onBack} variant="ghost" className="text-muted-foreground hover:text-foreground -ml-2">
+            <ArrowLeft className="h-4 w-4 mr-2" />
+            Back
+          </Button>
+          <div className="flex items-center gap-1">
+            <LanglyLogo size="md" />
+            <span className="font-bold text-foreground text-lg">Langly</span>
+          </div>
+          <div className="w-16" /> {/* Spacer for centering */}
+        </header>
+
+        <PrepositionDeepDive
+          germanWord={entry.german_word}
+          englishTranslation={entry.english_translation}
+          metadata={entry.metadata}
+          grammarNote={entry.grammar_note}
+        />
+      </div>
+    );
+  }
 
   return (
     <div className="w-full max-w-2xl mx-auto animate-in fade-in slide-in-from-bottom-4 duration-300">
