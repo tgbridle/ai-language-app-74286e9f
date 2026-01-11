@@ -18,6 +18,7 @@ import { VerbConjugationTable } from '@/components/deep-dive/VerbConjugationTabl
 import { PronounDeclensionTable } from '@/components/deep-dive/PronounDeclensionTable';
 import { ArticleDeclensionTable } from '@/components/deep-dive/ArticleDeclensionTable';
 import { AdjectiveComparisonTable } from '@/components/deep-dive/AdjectiveComparisonTable';
+import { PrepositionCaseCard } from '@/components/deep-dive/PrepositionCaseCard';
 import { LanglyLogo } from '@/components/LanglyLogo';
 
 interface WordDeepDiveProps {
@@ -122,6 +123,9 @@ export function WordDeepDive({ entryId, onBack }: WordDeepDiveProps) {
 
       case 'preposition':
         if (isPrepositionMetadata(entry.metadata)) {
+          // Extract contractions from note if present (format: "Contractions: an + dem = am, ...")
+          const contractions = (entry.metadata as { contractions?: string[] }).contractions;
+          
           return (
             <Card className="border border-border shadow-sm">
               <CardHeader>
@@ -130,21 +134,11 @@ export function WordDeepDive({ entryId, onBack }: WordDeepDiveProps) {
                 </CardTitle>
               </CardHeader>
               <CardContent>
-                <div className="flex items-center gap-3">
-                  <span
-                    className={cn(
-                      'px-4 py-2 rounded-lg text-sm font-semibold capitalize border',
-                      CASE_COLORS[entry.metadata.case]
-                    )}
-                  >
-                    Requires {entry.metadata.case === 'two-way' ? 'Accusative/Dative' : entry.metadata.case}
-                  </span>
-                </div>
-                {entry.metadata.note && (
-                  <p className="mt-3 text-muted-foreground text-sm">
-                    {entry.metadata.note}
-                  </p>
-                )}
+                <PrepositionCaseCard
+                  caseType={entry.metadata.case}
+                  note={entry.metadata.note}
+                  contractions={contractions}
+                />
               </CardContent>
             </Card>
           );
