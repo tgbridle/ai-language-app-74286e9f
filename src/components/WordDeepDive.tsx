@@ -17,6 +17,7 @@ import { NounDeclensionTable } from '@/components/deep-dive/NounDeclensionTable'
 import { VerbConjugationTable } from '@/components/deep-dive/VerbConjugationTable';
 import { PronounDeclensionTable } from '@/components/deep-dive/PronounDeclensionTable';
 import { ArticleDeclensionTable } from '@/components/deep-dive/ArticleDeclensionTable';
+import { LanglyLogo } from '@/components/LanglyLogo';
 
 interface WordDeepDiveProps {
   entryId: string;
@@ -29,7 +30,11 @@ export function WordDeepDive({ entryId, onBack }: WordDeepDiveProps) {
   if (isLoading) {
     return (
       <div className="w-full max-w-2xl mx-auto space-y-6">
-        <Skeleton className="h-10 w-24" />
+        {/* Header skeleton */}
+        <div className="flex items-center justify-between">
+          <Skeleton className="h-10 w-24" />
+          <Skeleton className="h-8 w-32" />
+        </div>
         <Skeleton className="h-24 w-full" />
         <Skeleton className="h-64 w-full" />
       </div>
@@ -38,12 +43,23 @@ export function WordDeepDive({ entryId, onBack }: WordDeepDiveProps) {
 
   if (!entry) {
     return (
-      <div className="w-full max-w-2xl mx-auto text-center py-12">
-        <p className="text-muted-foreground">Word not found.</p>
-        <Button onClick={onBack} variant="ghost" className="mt-4">
-          <ArrowLeft className="h-4 w-4 mr-2" />
-          Back to search
-        </Button>
+      <div className="w-full max-w-2xl mx-auto">
+        {/* Header Bar */}
+        <header className="flex items-center justify-between mb-8">
+          <Button onClick={onBack} variant="ghost" className="text-muted-foreground hover:text-foreground -ml-2">
+            <ArrowLeft className="h-4 w-4 mr-2" />
+            Back
+          </Button>
+          <div className="flex items-center gap-2">
+            <LanglyLogo size="sm" />
+            <span className="font-bold text-foreground">Langly</span>
+          </div>
+          <div className="w-16" /> {/* Spacer for centering */}
+        </header>
+        
+        <div className="text-center py-12">
+          <p className="text-muted-foreground">Word not found.</p>
+        </div>
       </div>
     );
   }
@@ -55,7 +71,7 @@ export function WordDeepDive({ entryId, onBack }: WordDeepDiveProps) {
           // Graceful fallback if declensions not yet migrated
           if (!entry.metadata.declensions) {
             return (
-              <Card className="border-2 border-border">
+              <Card className="border border-border shadow-sm">
                 <CardHeader>
                   <CardTitle className="text-lg font-semibold text-foreground">
                     Declension Table
@@ -69,7 +85,7 @@ export function WordDeepDive({ entryId, onBack }: WordDeepDiveProps) {
             );
           }
           return (
-            <Card className="border-2 border-border">
+            <Card className="border border-border shadow-sm">
               <CardHeader>
                 <CardTitle className="text-lg font-semibold text-foreground">
                   Declension Table
@@ -89,7 +105,7 @@ export function WordDeepDive({ entryId, onBack }: WordDeepDiveProps) {
       case 'verb':
         if (isVerbMetadata(entry.metadata)) {
           return (
-            <Card className="border-2 border-border">
+            <Card className="border border-border shadow-sm">
               <CardHeader>
                 <CardTitle className="text-lg font-semibold text-foreground">
                   Present Tense Conjugation
@@ -106,7 +122,7 @@ export function WordDeepDive({ entryId, onBack }: WordDeepDiveProps) {
       case 'preposition':
         if (isPrepositionMetadata(entry.metadata)) {
           return (
-            <Card className="border-2 border-border">
+            <Card className="border border-border shadow-sm">
               <CardHeader>
                 <CardTitle className="text-lg font-semibold text-foreground">
                   Case Requirement
@@ -137,7 +153,7 @@ export function WordDeepDive({ entryId, onBack }: WordDeepDiveProps) {
       case 'pronoun':
         if (isPronounMetadata(entry.metadata)) {
           return (
-            <Card className="border-2 border-border">
+            <Card className="border border-border shadow-sm">
               <CardHeader>
                 <CardTitle className="text-lg font-semibold text-foreground">
                   Case Declension
@@ -154,7 +170,7 @@ export function WordDeepDive({ entryId, onBack }: WordDeepDiveProps) {
       case 'article':
         if (isArticleMetadata(entry.metadata)) {
           return (
-            <Card className="border-2 border-border">
+            <Card className="border border-border shadow-sm">
               <CardHeader>
                 <CardTitle className="text-lg font-semibold text-foreground">
                   Case Declension
@@ -173,7 +189,7 @@ export function WordDeepDive({ entryId, onBack }: WordDeepDiveProps) {
           const { comparative, superlative } = entry.metadata;
           if (comparative || superlative) {
             return (
-              <Card className="border-2 border-border">
+              <Card className="border border-border shadow-sm">
                 <CardHeader>
                   <CardTitle className="text-lg font-semibold text-foreground">
                     Comparison
@@ -267,48 +283,59 @@ export function WordDeepDive({ entryId, onBack }: WordDeepDiveProps) {
   };
 
   return (
-    <div className="w-full max-w-2xl mx-auto space-y-6 animate-in fade-in slide-in-from-bottom-4 duration-300">
-      <Button onClick={onBack} variant="ghost" className="text-muted-foreground hover:text-foreground -ml-2">
-        <ArrowLeft className="h-4 w-4 mr-2" />
-        Back to search
-      </Button>
+    <div className="w-full max-w-2xl mx-auto animate-in fade-in slide-in-from-bottom-4 duration-300">
+      {/* Top Header Bar */}
+      <header className="flex items-center justify-between mb-8">
+        <Button onClick={onBack} variant="ghost" className="text-muted-foreground hover:text-foreground -ml-2">
+          <ArrowLeft className="h-4 w-4 mr-2" />
+          Back
+        </Button>
+        <div className="flex items-center gap-2">
+          <LanglyLogo size="sm" />
+          <span className="font-bold text-foreground">Langly</span>
+        </div>
+        <div className="w-16" /> {/* Spacer for centering */}
+      </header>
 
-      {/* Header Card */}
-      <Card className="border-2 border-border">
-        <CardHeader className="pb-4">
-          <div className="flex items-start justify-between gap-4 flex-wrap">
-            <div>
-              <CardTitle className="text-3xl sm:text-4xl font-bold tracking-tight">
-                {getHeaderDisplay()}
-              </CardTitle>
-              <p className="text-xl text-muted-foreground mt-2">
-                {entry.english_translation}
-              </p>
+      {/* Content */}
+      <div className="space-y-6">
+        {/* Header Card */}
+        <Card className="border border-border shadow-sm">
+          <CardHeader className="pb-4">
+            <div className="flex items-start justify-between gap-4 flex-wrap">
+              <div>
+                <CardTitle className="text-3xl sm:text-4xl font-bold tracking-tight">
+                  {getHeaderDisplay()}
+                </CardTitle>
+                <p className="text-xl text-muted-foreground mt-2">
+                  {entry.english_translation}
+                </p>
+              </div>
+              {getTypeBadge()}
             </div>
-            {getTypeBadge()}
-          </div>
-        </CardHeader>
-      </Card>
-
-      {/* Type-Specific Content */}
-      {renderTypeSpecificContent()}
-
-      {/* Grammar Insight Card */}
-      {entry.grammar_note && (
-        <Card className="border-2 border-accent bg-accent/20">
-          <CardHeader className="pb-2">
-            <CardTitle className="text-lg font-semibold text-foreground flex items-center gap-2">
-              <BookOpen className="h-5 w-5 text-primary" />
-              Grammar Insight
-            </CardTitle>
           </CardHeader>
-          <CardContent>
-            <p className="text-foreground leading-relaxed">
-              {entry.grammar_note}
-            </p>
-          </CardContent>
         </Card>
-      )}
+
+        {/* Type-Specific Content */}
+        {renderTypeSpecificContent()}
+
+        {/* Grammar Insight Card */}
+        {entry.grammar_note && (
+          <Card className="border border-border shadow-sm bg-muted/30">
+            <CardHeader className="pb-2">
+              <CardTitle className="text-lg font-semibold text-foreground flex items-center gap-2">
+                <BookOpen className="h-5 w-5 text-primary" />
+                Grammar Insight
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <p className="text-foreground leading-relaxed">
+                {entry.grammar_note}
+              </p>
+            </CardContent>
+          </Card>
+        )}
+      </div>
     </div>
   );
 }
