@@ -128,3 +128,8 @@ export function isArticleMetadata(metadata: DictionaryMetadata): metadata is Art
 export function isAdjectiveMetadata(metadata: DictionaryMetadata): metadata is AdjectiveMetadata {
   return 'comparative' in metadata || 'superlative' in metadata;
 }
+
+export function isAdverbMetadata(metadata: DictionaryMetadata): metadata is AdverbMetadata {
+  // Adverb metadata has same structure as adjective, but we check word_type in component
+  return 'comparative' in metadata || 'superlative' in metadata;
+}
