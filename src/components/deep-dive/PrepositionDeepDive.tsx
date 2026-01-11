@@ -69,22 +69,22 @@ export function PrepositionDeepDive({
         </CardHeader>
       </Card>
 
-      {/* Case Requirement Card - Centered & Bold */}
+      {/* Case Requirement Card */}
       <Card className="border border-border shadow-sm">
-        <CardContent className="py-8">
-          <div className="flex flex-col items-center text-center">
-            <span className="text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-3">
-              Case Requirement
-            </span>
-            <span className="text-2xl sm:text-3xl font-bold text-indigo-700 dark:text-indigo-400">
-              {getCaseLabel()}
-            </span>
-            {metadata.case === 'two-way' && (
-              <p className="text-sm text-muted-foreground mt-3 max-w-sm">
-                Uses Accusative for motion/direction, Dative for location/state.
-              </p>
-            )}
-          </div>
+        <CardHeader className="pb-2">
+          <CardTitle className="text-lg font-semibold text-foreground">
+            Case Requirement
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          <span className="text-lg font-medium text-indigo-700 dark:text-indigo-400">
+            {getCaseLabel()}
+          </span>
+          {metadata.case === 'two-way' && (
+            <p className="text-sm text-muted-foreground mt-2">
+              Uses Accusative for motion/direction, Dative for location/state.
+            </p>
+          )}
         </CardContent>
       </Card>
 
