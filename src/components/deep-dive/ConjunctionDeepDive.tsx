@@ -16,9 +16,9 @@ export function ConjunctionDeepDive({
 }: ConjunctionDeepDiveProps) {
   const getTypeLabel = () => {
     if (metadata.type === 'subordinating') {
-      return 'SUBORDINATING (Verb to the end)';
+      return 'Subordinating (verb goes to end)';
     }
-    return 'COORDINATING (Standard order)';
+    return 'Coordinating (standard word order)';
   };
 
   return (
