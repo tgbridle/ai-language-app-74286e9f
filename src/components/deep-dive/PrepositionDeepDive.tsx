@@ -20,9 +20,10 @@ export function PrepositionDeepDive({
   // Build the case label based on the case type
   const getCaseLabel = () => {
     if (metadata.case === 'two-way') {
-      return 'TWO-WAY (WECHSEL)';
+      return 'Two-way (Wechselpräposition)';
     }
-    return `ALWAYS ${metadata.case.toUpperCase()}`;
+    const capitalizedCase = metadata.case.charAt(0).toUpperCase() + metadata.case.slice(1);
+    return `Always ${capitalizedCase}`;
   };
 
   // Parse contractions from the note field (format: "im (in + dem), ins (in + das)")
