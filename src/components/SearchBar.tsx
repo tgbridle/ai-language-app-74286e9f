@@ -6,6 +6,7 @@ import type { DictionarySuggestion } from '@/types/dictionary';
 import { cn } from '@/lib/utils';
 import { WORD_TYPE_COLORS } from '@/lib/wordTypeColors';
 import { isNounMetadata } from '@/types/dictionary';
+import { useIsMobile } from '@/hooks/use-mobile';
 
 interface SearchBarProps {
   onSelectEntry: (entryId: string) => void;
@@ -18,6 +19,7 @@ export function SearchBar({ onSelectEntry }: SearchBarProps) {
   const { suggestions, isLoading, searchTerm, isGerman } = useDictionarySearch(query);
   const inputRef = useRef<HTMLInputElement>(null);
   const listRef = useRef<HTMLUListElement>(null);
+  const isMobile = useIsMobile();
 
   // Track previous suggestion count to only reset highlight when results change
   const prevSuggestionsLength = useRef(suggestions.length);
@@ -154,7 +156,10 @@ export function SearchBar({ onSelectEntry }: SearchBarProps) {
           ref={listRef}
           id="search-suggestions"
           role="listbox"
-          className="absolute z-50 w-full mt-2 bg-card border-2 border-border rounded-lg shadow-lg overflow-hidden"
+          className={cn(
+            "absolute z-50 w-full bg-card border-2 border-border rounded-lg shadow-lg overflow-hidden max-h-64 overflow-y-auto",
+            isMobile ? "bottom-full mb-2" : "mt-2"
+          )}
         >
           {suggestions.map((suggestion, index) => (
             <li
