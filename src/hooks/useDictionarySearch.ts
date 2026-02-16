@@ -1,7 +1,7 @@
 import { useState, useEffect, useMemo } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import type { DictionarySuggestion, WordType, DictionaryMetadata } from '@/types/dictionary';
-
+import { normalizeGerman } from '@/lib/normalizeGerman';
 const GERMAN_ARTICLES = ['der', 'die', 'das', 'den', 'dem', 'des', 'ein', 'eine', 'einen', 'einem', 'einer', 'eines'];
 const ENGLISH_ARTICLES = ['the', 'a', 'an'];
 
@@ -64,47 +64,50 @@ export function useDictionarySearch(query: string) {
       setIsLoading(true);
 
       try {
-        const searchLower = searchTerm.toLowerCase();
+        const normalizedQuery = normalizeGerman(searchTerm);
         
-        // Search German word prefix, English translation contains, and search_forms prefix match
+        // Fetch a broad set — we filter client-side with normalization
         const { data, error } = await supabase
           .from('dictionary')
           .select('id, german_word, english_translation, word_type, metadata, search_forms')
-          .or(`german_word.ilike.${searchLower}%,english_translation.ilike.%${searchLower}%`)
-          .limit(20);
+          .limit(500);
 
         if (error) throw error;
 
+        // Universal match: normalize everything, check german_word, english_translation, and search_forms
+        const matched = (data || []).filter(item => {
+          const germanNorm = normalizeGerman(item.german_word);
+          const englishNorm = normalizeGerman(item.english_translation);
+          const formsMatch = (item.search_forms || []).some(
+            form => normalizeGerman(form).includes(normalizedQuery)
+          );
+          return germanNorm.includes(normalizedQuery) ||
+                 englishNorm.includes(normalizedQuery) ||
+                 formsMatch;
+        });
+
         // Score and sort results by relevance
-        const scoredData = (data || []).map(item => {
-          const germanLower = item.german_word.toLowerCase();
-          const englishLower = item.english_translation.toLowerCase();
+        const scoredData = matched.map(item => {
+          const germanNorm = normalizeGerman(item.german_word);
+          const englishNorm = normalizeGerman(item.english_translation);
           
           let score = 0;
           
-          // Exact match on german_word = highest priority
-          if (germanLower === searchLower) score = 100;
-          // Exact match on english_translation
-          else if (englishLower === searchLower) score = 90;
-          // German word starts with search term
-          else if (germanLower.startsWith(searchLower)) score = 70;
-          // English starts with search term
-          else if (englishLower.startsWith(searchLower)) score = 60;
-          // English contains search term
-          else if (englishLower.includes(searchLower)) score = 40;
-          // search_forms match
-          else score = 20;
+          if (germanNorm === normalizedQuery) score = 100;
+          else if (englishNorm === normalizedQuery) score = 90;
+          else if (germanNorm.startsWith(normalizedQuery)) score = 70;
+          else if (englishNorm.startsWith(normalizedQuery)) score = 60;
+          else if (englishNorm.includes(normalizedQuery)) score = 40;
+          else score = 30; // search_forms match
           
           return { ...item, score };
         });
         
-        // Sort by score descending, then alphabetically
         scoredData.sort((a, b) => {
           if (b.score !== a.score) return b.score - a.score;
           return a.german_word.localeCompare(b.german_word);
         });
 
-        // Cast the data to match our types
         const typedData: DictionarySuggestion[] = scoredData.slice(0, 10).map(item => ({
           id: item.id,
           german_word: item.german_word,
