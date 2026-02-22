@@ -13,15 +13,6 @@ const DISCOVERY_CHIPS_ROW1 = [
   { label: 'aber', query: 'aber' },
 ];
 
-const DISCOVERY_CHIPS_ROW2 = [
-  { label: 'Buch', query: 'Buch' },
-  { label: 'denken', query: 'denken' },
-  { label: 'Arbeit', query: 'Arbeit' },
-  { label: 'cheap', query: 'cheap' },
-  { label: 'durch', query: 'durch' },
-  { label: 'to bring', query: 'to bring' },
-];
-
 const Index = () => {
   const [selectedEntryId, setSelectedEntryId] = useState<string | null>(null);
   const [isSearchFocused, setIsSearchFocused] = useState(false);
@@ -149,27 +140,6 @@ const Index = () => {
                         </button>
                       ))}
                       </motion.div>
-                  )}
-                </AnimatePresence>
-                <AnimatePresence>
-                  {!isSearchFocused && (
-                    <motion.div
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: 1 }}
-                      exit={{ opacity: 0, height: 0 }}
-                      transition={{ duration: 0.2, delay: 0.05 }}
-                      className="flex flex-wrap justify-center gap-2"
-                    >
-                      {DISCOVERY_CHIPS_ROW2.map((chip) => (
-                        <button
-                          key={chip.query}
-                          onClick={() => handleChipClick(chip.query)}
-                          className="px-4 py-1.5 rounded-full text-sm font-medium bg-muted hover:bg-accent border border-border/50 transition-all duration-200 hover:scale-105 bg-gradient-to-r hover:from-[hsl(217,91%,60%)]/10 hover:to-[hsl(270,60%,60%)]/10 text-primary"
-                        >
-                          {chip.label}
-                        </button>
-                      ))}
-                    </motion.div>
                   )}
                 </AnimatePresence>
               </motion.div>
