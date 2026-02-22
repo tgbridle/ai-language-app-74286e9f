@@ -155,14 +155,14 @@ export function SearchBar({ onSelectEntry, onFocusChange, externalQuery, onExter
         <Input
           ref={inputRef}
           type="text"
-          placeholder="Search German or English..."
+          placeholder="Search for a German or English word"
           value={query}
           onChange={(e) => setQuery(e.target.value)}
           onKeyDownCapture={handleKeyDown}
           onFocus={handleFocus}
           className={cn(
             "pl-12 pr-12 h-14 text-lg shadow-sm placeholder:text-muted-foreground/50 transition-all duration-300",
-            "bg-card/70 backdrop-blur-[10px] border border-white/30 dark:border-white/10",
+            "bg-card/80 backdrop-blur-[10px] border-2 border-white/40 dark:border-white/15",
             isFocused
               ? "border-primary/50 ring-2 ring-primary/20 shadow-lg"
               : "focus-visible:ring-primary"
