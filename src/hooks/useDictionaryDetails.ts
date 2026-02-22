@@ -33,6 +33,8 @@ export function useDictionaryDetails(entryId: string | null) {
             metadata: data.metadata as DictionaryMetadata,
             search_forms: data.search_forms,
             grammar_note: data.grammar_note,
+            example_sentence_de: data.example_sentence_de ?? null,
+            example_sentence_en: data.example_sentence_en ?? null,
             created_at: data.created_at,
           });
         } else {

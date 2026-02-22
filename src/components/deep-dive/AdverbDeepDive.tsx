@@ -10,6 +10,8 @@ interface AdverbDeepDiveProps {
   englishTranslation: string;
   metadata: AdverbMetadata;
   grammarNote: string | null;
+  exampleSentenceDe: string | null;
+  exampleSentenceEn: string | null;
 }
 
 export function AdverbDeepDive({
@@ -17,6 +19,8 @@ export function AdverbDeepDive({
   englishTranslation,
   metadata,
   grammarNote,
+  exampleSentenceDe,
+  exampleSentenceEn,
 }: AdverbDeepDiveProps) {
   const hasComparison = metadata.comparative || metadata.superlative;
 
@@ -33,6 +37,14 @@ export function AdverbDeepDive({
               <p className="text-xl text-muted-foreground mt-2">
                 {englishTranslation}
               </p>
+              {exampleSentenceDe && (
+                <div className="mt-4 space-y-1">
+                  <p className="italic text-foreground/90">„{exampleSentenceDe}"</p>
+                  {exampleSentenceEn && (
+                    <p className="text-sm text-muted-foreground">"{exampleSentenceEn}"</p>
+                  )}
+                </div>
+              )}
             </div>
             <span
               className={cn(
