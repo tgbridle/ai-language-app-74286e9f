@@ -161,11 +161,12 @@ export function SearchBar({ onSelectEntry, onFocusChange, externalQuery, onExter
           onKeyDownCapture={handleKeyDown}
           onFocus={handleFocus}
           className={cn(
-            "pl-12 pr-12 h-14 text-lg shadow-sm placeholder:text-muted-foreground/50 transition-all duration-300",
-            "bg-card/80 backdrop-blur-[10px] border-2 border-white/40 dark:border-white/15",
+            "pl-12 pr-12 h-14 text-lg placeholder:text-muted-foreground/50 transition-all duration-300",
+            "bg-card/80 backdrop-blur-[10px] border border-border/60",
+            "shadow-[0_2px_20px_-4px_hsl(217,91%,60%,0.15),0_1px_4px_-1px_hsl(0,0%,0%,0.06)]",
             isFocused
-              ? "border-primary/50 ring-2 ring-primary/20 shadow-lg"
-              : "focus-visible:ring-primary"
+              ? "border-primary/50 ring-2 ring-primary/20 shadow-[0_4px_30px_-4px_hsl(217,91%,60%,0.25)]"
+              : "hover:shadow-[0_4px_24px_-4px_hsl(217,91%,60%,0.2)] hover:border-border"
           )}
           aria-label="Search dictionary"
           aria-autocomplete="list"
