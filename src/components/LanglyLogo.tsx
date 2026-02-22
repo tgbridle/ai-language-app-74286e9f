@@ -1,4 +1,5 @@
 import { cn } from '@/lib/utils';
+import { useId } from 'react';
 
 interface LanglyLogoProps {
   size?: 'sm' | 'md' | 'lg';
@@ -6,6 +7,9 @@ interface LanglyLogoProps {
 }
 
 export function LanglyLogo({ size = 'lg', className }: LanglyLogoProps) {
+  const uid = useId();
+  const gradId = `dot-grad-${uid}`;
+
   const sizeConfig = {
     sm: { h: 24, dotR: 3, gap: 9, fs: 16, textX: 22 },
     md: { h: 32, dotR: 4, gap: 11, fs: 22, textX: 28 },
@@ -13,7 +17,6 @@ export function LanglyLogo({ size = 'lg', className }: LanglyLogoProps) {
   };
 
   const { h, dotR, gap, fs, textX } = sizeConfig[size];
-  // Dots sit at the top-left, text baseline at the bottom
   const dotCy = dotR + 1;
   const dot1Cx = dotR + 1;
   const dot2Cx = dot1Cx + gap;
@@ -29,13 +32,13 @@ export function LanglyLogo({ size = 'lg', className }: LanglyLogoProps) {
       role="img"
     >
       <defs>
-        <linearGradient id={`dot-grad-${size}`} x1="0%" y1="0%" x2="100%" y2="0%">
+        <linearGradient id={gradId} x1="0%" y1="0%" x2="100%" y2="100%">
           <stop offset="0%" stopColor="#3b82f6" />
           <stop offset="100%" stopColor="#a855f7" />
         </linearGradient>
       </defs>
-      <circle cx={dot1Cx} cy={dotCy} r={dotR} fill={`url(#dot-grad-${size})`} />
-      <circle cx={dot2Cx} cy={dotCy} r={dotR} fill={`url(#dot-grad-${size})`} />
+      <circle cx={dot1Cx} cy={dotCy} r={dotR} fill={`url(#${gradId})`} />
+      <circle cx={dot2Cx} cy={dotCy} r={dotR} fill={`url(#${gradId})`} />
       <text
         x={textX}
         y={textBaseline}
