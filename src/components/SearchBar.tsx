@@ -50,24 +50,28 @@ export function SearchBar({ onSelectEntry }: SearchBarProps) {
 
     if (!isOpen && !isNavKey) return;
 
-    switch (e.key) {
-      case 'ArrowDown':
+    // On mobile, suggestions render above the input, so we swap arrow directions
+    const goNext = isMobile ? e.key === 'ArrowUp' : e.key === 'ArrowDown';
+    const goPrev = isMobile ? e.key === 'ArrowDown' : e.key === 'ArrowUp';
+
+    switch (true) {
+      case goNext:
         e.preventDefault();
         setHighlightedIndex((prev) =>
           prev < suggestions.length - 1 ? prev + 1 : prev
         );
         break;
-      case 'ArrowUp':
+      case goPrev:
         e.preventDefault();
         setHighlightedIndex((prev) => (prev > 0 ? prev - 1 : -1));
         break;
-      case 'Enter':
+      case e.key === 'Enter':
         e.preventDefault();
         if (highlightedIndex >= 0 && suggestions[highlightedIndex]) {
           handleSelect(suggestions[highlightedIndex]);
         }
         break;
-      case 'Escape':
+      case e.key === 'Escape':
         setIsOpen(false);
         setHighlightedIndex(-1);
         break;
