@@ -11,9 +11,11 @@ import { useIsMobile } from '@/hooks/use-mobile';
 interface SearchBarProps {
   onSelectEntry: (entryId: string) => void;
   onFocusChange?: (focused: boolean) => void;
+  externalQuery?: string | null;
+  onExternalQueryConsumed?: () => void;
 }
 
-export function SearchBar({ onSelectEntry, onFocusChange }: SearchBarProps) {
+export function SearchBar({ onSelectEntry, onFocusChange, externalQuery, onExternalQueryConsumed }: SearchBarProps) {
   const [query, setQuery] = useState('');
   const [isOpen, setIsOpen] = useState(false);
   const [isFocused, setIsFocused] = useState(false);
@@ -35,6 +37,15 @@ export function SearchBar({ onSelectEntry, onFocusChange }: SearchBarProps) {
       prevSuggestionsLength.current = suggestions.length;
     }
   }, [suggestions.length, query.length]);
+
+  // Handle external query from discovery chips
+  useEffect(() => {
+    if (externalQuery) {
+      setQuery(externalQuery);
+      inputRef.current?.focus();
+      onExternalQueryConsumed?.();
+    }
+  }, [externalQuery, onExternalQueryConsumed]);
 
   const handleFocus = () => {
     setIsFocused(true);
@@ -150,10 +161,11 @@ export function SearchBar({ onSelectEntry, onFocusChange }: SearchBarProps) {
           onKeyDownCapture={handleKeyDown}
           onFocus={handleFocus}
           className={cn(
-            "pl-12 pr-12 h-14 text-lg border-2 bg-card shadow-sm placeholder:text-muted-foreground/50 transition-all duration-300",
+            "pl-12 pr-12 h-14 text-lg shadow-sm placeholder:text-muted-foreground/50 transition-all duration-300",
+            "bg-card/70 backdrop-blur-[10px] border border-white/30 dark:border-white/10",
             isFocused
               ? "border-primary/50 ring-2 ring-primary/20 shadow-lg"
-              : "border-border focus-visible:ring-primary"
+              : "focus-visible:ring-primary"
           )}
           aria-label="Search dictionary"
           aria-autocomplete="list"
