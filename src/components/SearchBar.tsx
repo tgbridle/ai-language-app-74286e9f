@@ -10,39 +10,58 @@ import { useIsMobile } from '@/hooks/use-mobile';
 
 interface SearchBarProps {
   onSelectEntry: (entryId: string) => void;
+  onFocusChange?: (focused: boolean) => void;
 }
 
-export function SearchBar({ onSelectEntry }: SearchBarProps) {
+export function SearchBar({ onSelectEntry, onFocusChange }: SearchBarProps) {
   const [query, setQuery] = useState('');
   const [isOpen, setIsOpen] = useState(false);
+  const [isFocused, setIsFocused] = useState(false);
   const [highlightedIndex, setHighlightedIndex] = useState(-1);
   const { suggestions, isLoading } = useDictionarySearch(query);
   const inputRef = useRef<HTMLInputElement>(null);
   const listRef = useRef<HTMLUListElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
   const isMobile = useIsMobile();
 
-  // Track previous suggestion count to only reset highlight when results change
   const prevSuggestionsLength = useRef(suggestions.length);
-  
+
   useEffect(() => {
     const hasResults = suggestions.length > 0 && query.length > 0;
     setIsOpen(hasResults);
-    
-    // Only reset highlight when switching from no results to results, or vice versa
+
     if (suggestions.length !== prevSuggestionsLength.current) {
       setHighlightedIndex(-1);
       prevSuggestionsLength.current = suggestions.length;
     }
   }, [suggestions.length, query.length]);
 
+  const handleFocus = () => {
+    setIsFocused(true);
+    onFocusChange?.(true);
+    if (query.length > 0 && suggestions.length > 0) setIsOpen(true);
+  };
+
+  const handleBlur = (e: React.FocusEvent) => {
+    // Don't blur if clicking within the search container
+    if (containerRef.current?.contains(e.relatedTarget as Node)) return;
+    // Delay to allow click events on suggestions
+    setTimeout(() => {
+      setIsFocused(false);
+      onFocusChange?.(false);
+      setIsOpen(false);
+    }, 150);
+  };
+
   const handleSelect = (suggestion: DictionarySuggestion) => {
     onSelectEntry(suggestion.id);
     setQuery('');
     setIsOpen(false);
+    setIsFocused(false);
+    onFocusChange?.(false);
   };
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
-    // If results exist, allow ArrowDown/ArrowUp to open the list and start navigation
     const isNavKey = e.key === 'ArrowDown' || e.key === 'ArrowUp';
     if (!isOpen && isNavKey && suggestions.length > 0) {
       setIsOpen(true);
@@ -50,7 +69,6 @@ export function SearchBar({ onSelectEntry }: SearchBarProps) {
 
     if (!isOpen && !isNavKey) return;
 
-    // On mobile, suggestions render above the input, so we swap arrow directions
     const goNext = isMobile ? e.key === 'ArrowUp' : e.key === 'ArrowDown';
     const goPrev = isMobile ? e.key === 'ArrowDown' : e.key === 'ArrowUp';
 
@@ -74,6 +92,7 @@ export function SearchBar({ onSelectEntry }: SearchBarProps) {
       case e.key === 'Escape':
         setIsOpen(false);
         setHighlightedIndex(-1);
+        inputRef.current?.blur();
         break;
     }
   };
@@ -84,9 +103,7 @@ export function SearchBar({ onSelectEntry }: SearchBarProps) {
     inputRef.current?.focus();
   };
 
-  // Format suggestion with standardized template
   const formatSuggestion = (suggestion: DictionarySuggestion) => {
-    // Extract article from declensions for nouns
     let article = '';
     if (suggestion.word_type === 'noun' && isNounMetadata(suggestion.metadata)) {
       const nomSingular = suggestion.metadata.declensions?.singular?.nominative;
@@ -103,22 +120,27 @@ export function SearchBar({ onSelectEntry }: SearchBarProps) {
 
     return (
       <span className="flex items-center justify-between w-full">
-      <span className="flex items-center gap-1.5 min-w-0">
+        <span className="flex items-center gap-2 min-w-0">
           <span className="font-semibold text-foreground truncate">{germanPart}</span>
-          <span className="text-[10px] uppercase tracking-wider text-muted-foreground/70 font-medium select-none">DE</span>
-          <span className="text-muted-foreground mx-1">—</span>
+          <span className="font-mono text-[9px] uppercase tracking-widest text-muted-foreground/50 font-medium select-none">DE</span>
+          <span className="text-muted-foreground/30 mx-0.5">·</span>
           <span className="text-muted-foreground truncate">{englishPart}</span>
-          <span className="text-[10px] uppercase tracking-wider text-muted-foreground/70 font-medium select-none">EN</span>
+          <span className="font-mono text-[9px] uppercase tracking-widest text-muted-foreground/50 font-medium select-none">EN</span>
         </span>
-        <span className={cn("text-xs ml-3 shrink-0", WORD_TYPE_COLORS[typePart].text)}>({typePart})</span>
+        <span className={cn("text-xs ml-3 shrink-0 font-mono uppercase tracking-wider", WORD_TYPE_COLORS[typePart].text)}>
+          {typePart}
+        </span>
       </span>
     );
   };
 
   return (
-    <div className="relative w-full max-w-xl mx-auto">
+    <div ref={containerRef} className="relative w-full max-w-xl mx-auto" onBlur={handleBlur}>
       <div className="relative">
-        <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" />
+        <Search className={cn(
+          "absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 transition-colors duration-200",
+          isFocused ? "text-primary" : "text-muted-foreground"
+        )} />
         <Input
           ref={inputRef}
           type="text"
@@ -126,8 +148,13 @@ export function SearchBar({ onSelectEntry }: SearchBarProps) {
           value={query}
           onChange={(e) => setQuery(e.target.value)}
           onKeyDownCapture={handleKeyDown}
-          onFocus={() => query.length > 0 && suggestions.length > 0 && setIsOpen(true)}
-          className="pl-12 pr-12 h-14 text-lg border-2 border-border bg-card shadow-sm focus-visible:ring-primary placeholder:text-muted-foreground/50"
+          onFocus={handleFocus}
+          className={cn(
+            "pl-12 pr-12 h-14 text-lg border-2 bg-card shadow-sm placeholder:text-muted-foreground/50 transition-all duration-300",
+            isFocused
+              ? "border-primary/50 ring-2 ring-primary/20 shadow-lg"
+              : "border-border focus-visible:ring-primary"
+          )}
           aria-label="Search dictionary"
           aria-autocomplete="list"
           aria-expanded={isOpen}
@@ -154,7 +181,12 @@ export function SearchBar({ onSelectEntry }: SearchBarProps) {
           id="search-suggestions"
           role="listbox"
           className={cn(
-            "absolute z-50 w-full bg-card border-2 border-border rounded-lg shadow-lg overflow-hidden max-h-64 overflow-y-auto",
+            "absolute z-50 w-full rounded-xl overflow-hidden max-h-72 overflow-y-auto",
+            // Glassmorphism container
+            "bg-gradient-to-br from-primary/[0.04] via-secondary/[0.06] to-primary/[0.04]",
+            "backdrop-blur-xl",
+            "border border-white/20 dark:border-white/10",
+            "shadow-xl shadow-primary/5",
             isMobile ? "bottom-full mb-2" : "mt-2"
           )}
         >
@@ -166,10 +198,11 @@ export function SearchBar({ onSelectEntry }: SearchBarProps) {
               onClick={() => handleSelect(suggestion)}
               onMouseEnter={() => setHighlightedIndex(index)}
               className={cn(
-                "px-4 py-3 cursor-pointer transition-colors border-b border-border last:border-b-0",
+                "px-4 py-3 cursor-pointer transition-all duration-150",
+                "border-b border-white/10 dark:border-white/5 last:border-b-0",
                 highlightedIndex === index
-                  ? "bg-accent"
-                  : "hover:bg-accent/50"
+                  ? "bg-white/30 dark:bg-white/10 backdrop-blur-sm"
+                  : "hover:bg-white/20 dark:hover:bg-white/5"
               )}
             >
               {formatSuggestion(suggestion)}
