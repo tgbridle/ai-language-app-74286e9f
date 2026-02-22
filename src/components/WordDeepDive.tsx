@@ -52,7 +52,7 @@ export function WordDeepDive({ entryId, onBack }: WordDeepDiveProps) {
           </Button>
           <div className="flex items-center gap-0.5">
             <LanglyLogo size="sm" />
-            <span className="font-bold text-foreground text-lg">Langly</span>
+            <span className="font-bold text-lg bg-gradient-to-r from-[hsl(217,91%,60%)] to-[hsl(270,60%,60%)] bg-clip-text text-transparent">Langly</span>
           </div>
           <div className="w-14" />
         </header>
@@ -75,7 +75,7 @@ export function WordDeepDive({ entryId, onBack }: WordDeepDiveProps) {
         </Button>
         <div className="flex items-center gap-0.5">
           <LanglyLogo size="sm" />
-          <span className="font-bold text-foreground text-lg">Langly</span>
+          <span className="font-bold text-lg bg-gradient-to-r from-[hsl(217,91%,60%)] to-[hsl(270,60%,60%)] bg-clip-text text-transparent">Langly</span>
         </div>
         <div className="w-14" />
       </header>
@@ -216,7 +216,7 @@ export function WordDeepDive({ entryId, onBack }: WordDeepDiveProps) {
         </Button>
         <div className="flex items-center gap-0.5">
           <LanglyLogo size="sm" />
-          <span className="font-bold text-foreground text-lg">Langly</span>
+          <span className="font-bold text-lg bg-gradient-to-r from-[hsl(217,91%,60%)] to-[hsl(270,60%,60%)] bg-clip-text text-transparent">Langly</span>
         </div>
         <div className="w-14" />
       </header>

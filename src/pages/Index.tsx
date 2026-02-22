@@ -4,13 +4,22 @@ import { SearchBar } from '@/components/SearchBar';
 import { WordDeepDive } from '@/components/WordDeepDive';
 import { LanglyLogo } from '@/components/LanglyLogo';
 
-const DISCOVERY_CHIPS = [
+const DISCOVERY_CHIPS_ROW1 = [
   { label: 'sein', query: 'sein' },
   { label: 'Hund', query: 'Hund' },
   { label: 'mit', query: 'mit' },
   { label: 'to have', query: 'to have' },
   { label: 'schnell', query: 'schnell' },
   { label: 'aber', query: 'aber' },
+];
+
+const DISCOVERY_CHIPS_ROW2 = [
+  { label: 'Buch', query: 'Buch' },
+  { label: 'denken', query: 'denken' },
+  { label: 'Arbeit', query: 'Arbeit' },
+  { label: 'cheap', query: 'cheap' },
+  { label: 'durch', query: 'durch' },
+  { label: 'to bring', query: 'to bring' },
 ];
 
 const Index = () => {
@@ -78,11 +87,11 @@ const Index = () => {
                     <div className="flex justify-center -mb-1">
                       <LanglyLogo size="lg" />
                     </div>
-                    <h1 className="text-5xl sm:text-6xl font-bold tracking-tight mb-4 bg-gradient-to-r from-[hsl(217,91%,60%)] to-[hsl(270,60%,60%)] bg-clip-text text-transparent">
+                    <h1 className="text-5xl sm:text-6xl font-bold tracking-tight mb-4 bg-gradient-to-r from-[hsl(217,91%,60%)] to-[hsl(270,60%,60%)] bg-clip-text text-transparent pb-1">
                       Langly
                     </h1>
                     <p className="text-muted-foreground text-lg sm:text-xl font-medium">
-                      Master German, One Word at a Time.
+                      Master German, one word at a time.
                     </p>
                   </motion.header>
                 )}
@@ -130,7 +139,28 @@ const Index = () => {
                       transition={{ duration: 0.2 }}
                       className="flex flex-wrap justify-center gap-2"
                     >
-                      {DISCOVERY_CHIPS.map((chip) => (
+                      {DISCOVERY_CHIPS_ROW1.map((chip) => (
+                        <button
+                          key={chip.query}
+                          onClick={() => handleChipClick(chip.query)}
+                          className="px-4 py-1.5 rounded-full text-sm font-medium bg-muted hover:bg-accent border border-border/50 transition-all duration-200 hover:scale-105 bg-gradient-to-r hover:from-[hsl(217,91%,60%)]/10 hover:to-[hsl(270,60%,60%)]/10 text-primary"
+                        >
+                          {chip.label}
+                        </button>
+                      ))}
+                      </motion.div>
+                  )}
+                </AnimatePresence>
+                <AnimatePresence>
+                  {!isSearchFocused && (
+                    <motion.div
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      exit={{ opacity: 0, height: 0 }}
+                      transition={{ duration: 0.2, delay: 0.05 }}
+                      className="flex flex-wrap justify-center gap-2"
+                    >
+                      {DISCOVERY_CHIPS_ROW2.map((chip) => (
                         <button
                           key={chip.query}
                           onClick={() => handleChipClick(chip.query)}
