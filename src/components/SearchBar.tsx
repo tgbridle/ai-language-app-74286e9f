@@ -99,12 +99,12 @@ export function SearchBar({ onSelectEntry }: SearchBarProps) {
 
     return (
       <span className="flex items-center justify-between w-full">
-        <span className="flex items-center gap-1.5 min-w-0">
-          <span className="text-[10px] uppercase tracking-wider text-muted-foreground/70 font-medium select-none">DE</span>
+      <span className="flex items-center gap-1.5 min-w-0">
           <span className="font-semibold text-foreground truncate">{germanPart}</span>
+          <span className="text-[10px] uppercase tracking-wider text-muted-foreground/70 font-medium select-none">DE</span>
           <span className="text-muted-foreground mx-1">—</span>
-          <span className="text-[10px] uppercase tracking-wider text-muted-foreground/70 font-medium select-none">EN</span>
           <span className="text-muted-foreground truncate">{englishPart}</span>
+          <span className="text-[10px] uppercase tracking-wider text-muted-foreground/70 font-medium select-none">EN</span>
         </span>
         <span className={cn("text-xs ml-3 shrink-0", WORD_TYPE_COLORS[typePart].text)}>({typePart})</span>
       </span>
