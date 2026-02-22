@@ -4,18 +4,43 @@ import { SearchBar } from '@/components/SearchBar';
 import { WordDeepDive } from '@/components/WordDeepDive';
 import { LanglyLogo } from '@/components/LanglyLogo';
 
+const DISCOVERY_CHIPS = [
+  { label: 'sein', query: 'sein' },
+  { label: 'Hund', query: 'Hund' },
+  { label: 'mit', query: 'mit' },
+  { label: 'to have', query: 'to have' },
+  { label: 'schnell', query: 'schnell' },
+  { label: 'aber', query: 'aber' },
+];
+
 const Index = () => {
   const [selectedEntryId, setSelectedEntryId] = useState<string | null>(null);
   const [isSearchFocused, setIsSearchFocused] = useState(false);
+  const [chipQuery, setChipQuery] = useState<string | null>(null);
 
   const handleSearchFocus = useCallback((focused: boolean) => {
     setIsSearchFocused(focused);
   }, []);
 
+  const handleChipClick = (query: string) => {
+    setChipQuery(query);
+  };
+
+  // Reset chip query after it's consumed
+  const handleChipConsumed = useCallback(() => {
+    setChipQuery(null);
+  }, []);
+
   return (
-    <div className="min-h-screen bg-background relative">
+    <div className="min-h-screen bg-background relative overflow-hidden">
+      {/* Mesh gradient blobs */}
+      <div className="pointer-events-none fixed inset-0 z-0" aria-hidden="true">
+        <div className="absolute -top-40 -right-40 w-[600px] h-[600px] rounded-full bg-[hsl(217,91%,60%)] opacity-[0.05] blur-[120px]" />
+        <div className="absolute -bottom-40 -left-40 w-[500px] h-[500px] rounded-full bg-[hsl(270,60%,60%)] opacity-[0.05] blur-[120px]" />
+      </div>
+
       {selectedEntryId ? (
-        <div className="container mx-auto px-4 py-10 sm:py-16">
+        <div className="container mx-auto px-4 py-10 sm:py-16 relative z-10">
           <WordDeepDive entryId={selectedEntryId} onBack={() => setSelectedEntryId(null)} />
         </div>
       ) : (
@@ -30,7 +55,6 @@ const Index = () => {
                 transition={{ duration: 0.25 }}
                 className="fixed inset-0 z-30 bg-background/60 backdrop-blur-sm"
                 onClick={() => {
-                  // Allow clicking overlay to unfocus
                   const input = document.querySelector<HTMLInputElement>('[aria-label="Search dictionary"]');
                   input?.blur();
                 }}
@@ -54,11 +78,12 @@ const Index = () => {
                     <div className="flex justify-center -mb-1">
                       <LanglyLogo size="lg" />
                     </div>
-                    <h1 className="text-4xl sm:text-5xl font-bold text-foreground tracking-tight mb-4">
+                    <h1 className="text-5xl sm:text-6xl font-bold tracking-tight mb-4 bg-gradient-to-r from-[hsl(217,91%,60%)] to-[hsl(270,60%,60%)] bg-clip-text text-transparent">
                       Langly
                     </h1>
-                    <p className="text-muted-foreground text-lg sm:text-xl">Your language learning companion.</p>
-                    <p className="text-muted-foreground text-lg sm:text-xl mt-1">Search, learn, use.</p>
+                    <p className="text-muted-foreground text-lg sm:text-xl font-medium">
+                      Master German, One Word at a Time.
+                    </p>
                   </motion.header>
                 )}
               </AnimatePresence>
@@ -75,7 +100,9 @@ const Index = () => {
                     className="flex items-center gap-1 mb-4"
                   >
                     <LanglyLogo size="sm" />
-                    <span className="text-lg font-bold text-foreground tracking-tight">Langly</span>
+                    <span className="text-lg font-bold tracking-tight bg-gradient-to-r from-[hsl(217,91%,60%)] to-[hsl(270,60%,60%)] bg-clip-text text-transparent">
+                      Langly
+                    </span>
                   </motion.div>
                 )}
               </AnimatePresence>
@@ -89,9 +116,11 @@ const Index = () => {
                 <SearchBar
                   onSelectEntry={setSelectedEntryId}
                   onFocusChange={handleSearchFocus}
+                  externalQuery={chipQuery}
+                  onExternalQueryConsumed={handleChipConsumed}
                 />
 
-                {/* Discovery hint */}
+                {/* Discovery Chips */}
                 <AnimatePresence>
                   {!isSearchFocused && (
                     <motion.div
@@ -99,15 +128,17 @@ const Index = () => {
                       animate={{ opacity: 1 }}
                       exit={{ opacity: 0, height: 0 }}
                       transition={{ duration: 0.2 }}
-                      className="text-center text-muted-foreground text-sm"
+                      className="flex flex-wrap justify-center gap-2"
                     >
-                      <p>
-                        Explore everything from verbs to prepositions. Try:{' '}
-                        <span className="font-medium text-foreground/70">sein</span>,{' '}
-                        <span className="font-medium text-foreground/70">Hund</span>,{' '}
-                        <span className="font-medium text-foreground/70">mit</span>, or{' '}
-                        <span className="font-medium text-foreground/70">to have</span>...
-                      </p>
+                      {DISCOVERY_CHIPS.map((chip) => (
+                        <button
+                          key={chip.query}
+                          onClick={() => handleChipClick(chip.query)}
+                          className="px-4 py-1.5 rounded-full text-sm font-medium bg-muted hover:bg-accent border border-border/50 transition-all duration-200 hover:scale-105 bg-gradient-to-r hover:from-[hsl(217,91%,60%)]/10 hover:to-[hsl(270,60%,60%)]/10 text-primary"
+                        >
+                          {chip.label}
+                        </button>
+                      ))}
                     </motion.div>
                   )}
                 </AnimatePresence>
