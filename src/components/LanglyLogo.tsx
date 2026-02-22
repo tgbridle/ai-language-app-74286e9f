@@ -1,5 +1,5 @@
+import langlyLogo from '@/assets/langly-logo.png';
 import { cn } from '@/lib/utils';
-import { useId } from 'react';
 
 interface LanglyLogoProps {
   size?: 'sm' | 'md' | 'lg';
@@ -7,49 +7,17 @@ interface LanglyLogoProps {
 }
 
 export function LanglyLogo({ size = 'lg', className }: LanglyLogoProps) {
-  const uid = useId();
-  const gradId = `dot-grad-${uid}`;
-
-  const sizeConfig = {
-    sm: { h: 24, dotR: 3, gap: 9, fs: 16, textX: 22 },
-    md: { h: 32, dotR: 4, gap: 11, fs: 22, textX: 28 },
-    lg: { h: 48, dotR: 6, gap: 16, fs: 36, textX: 42 },
+  const sizeClasses = {
+    sm: 'w-10 h-10',
+    md: 'w-12 h-12',
+    lg: 'w-20 h-20 sm:w-24 sm:h-24',
   };
 
-  const { h, dotR, gap, fs, textX } = sizeConfig[size];
-  const dotCy = dotR + 1;
-  const dot1Cx = dotR + 1;
-  const dot2Cx = dot1Cx + gap;
-  const textBaseline = h;
-  const totalWidth = textX + fs * 3.6;
-
   return (
-    <svg
-      viewBox={`0 0 ${totalWidth} ${h + 2}`}
-      height={h}
-      className={cn('shrink-0', className)}
-      aria-label="Langly"
-      role="img"
-    >
-      <defs>
-        <linearGradient id={gradId} x1="0%" y1="0%" x2="100%" y2="100%">
-          <stop offset="0%" stopColor="#3b82f6" />
-          <stop offset="100%" stopColor="#a855f7" />
-        </linearGradient>
-      </defs>
-      <circle cx={dot1Cx} cy={dotCy} r={dotR} fill={`url(#${gradId})`} />
-      <circle cx={dot2Cx} cy={dotCy} r={dotR} fill={`url(#${gradId})`} />
-      <text
-        x={textX}
-        y={textBaseline}
-        fontFamily="'Inter', system-ui, sans-serif"
-        fontWeight="800"
-        fontSize={fs}
-        fill="#1e293b"
-        dominantBaseline="auto"
-      >
-        Langly
-      </text>
-    </svg>
+    <img
+      src={langlyLogo}
+      alt="Langly logo"
+      className={cn(sizeClasses[size], 'object-contain', className)}
+    />
   );
 }
