@@ -69,8 +69,8 @@ export function SearchBar({ onSelectEntry, onFocusChange }: SearchBarProps) {
 
     if (!isOpen && !isNavKey) return;
 
-    const goNext = isMobile ? e.key === 'ArrowUp' : e.key === 'ArrowDown';
-    const goPrev = isMobile ? e.key === 'ArrowDown' : e.key === 'ArrowUp';
+    const goNext = e.key === 'ArrowDown';
+    const goPrev = e.key === 'ArrowUp';
 
     switch (true) {
       case goNext:
@@ -187,7 +187,7 @@ export function SearchBar({ onSelectEntry, onFocusChange }: SearchBarProps) {
             "backdrop-blur-xl",
             "border border-white/20 dark:border-white/10",
             "shadow-xl shadow-primary/5",
-            isMobile ? "bottom-full mb-2" : "mt-2"
+            "mt-2"
           )}
         >
           {suggestions.map((suggestion, index) => (
