@@ -1,13 +1,7 @@
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from '@/components/ui/table';
+import { useState } from 'react';
 import { NounDeclensions } from '@/types/dictionary';
 import { GENDER_TEXT_COLORS } from '@/lib/wordTypeColors';
+import { cn } from '@/lib/utils';
 
 interface NounDeclensionTableProps {
   declensions: NounDeclensions;
@@ -23,7 +17,6 @@ const CASES = [
 
 type CaseKey = typeof CASES[number]['key'];
 
-// Parse "der Hund" into { article: "der", noun: "Hund" }
 function parseArticulatedForm(form: string | null): { article: string; noun: string } | null {
   if (!form) return null;
   const parts = form.split(' ');
@@ -40,61 +33,69 @@ export function NounDeclensionTable({ declensions, gender }: NounDeclensionTable
     declensions.plural.genitive
   );
 
+  const [activeTab, setActiveTab] = useState<'singular' | 'plural'>('singular');
   const genderTextClass = GENDER_TEXT_COLORS[gender];
 
+  const currentForms = activeTab === 'singular' ? declensions.singular : declensions.plural;
+
   return (
-    <div className="overflow-x-auto">
-      <Table>
-        <TableHeader>
-          <TableRow className="border-border">
-            <TableHead className="w-32 font-semibold text-muted-foreground">Case</TableHead>
-            <TableHead className="font-semibold text-muted-foreground">Singular</TableHead>
-            {hasPluralForms && (
-              <TableHead className="font-semibold text-muted-foreground">Plural</TableHead>
+    <div>
+      {/* Tabs */}
+      {hasPluralForms && (
+        <div className="flex gap-1 mb-3">
+          <button
+            onClick={() => setActiveTab('singular')}
+            className={cn(
+              "flex-1 py-2 text-sm font-medium rounded-md transition-colors",
+              activeTab === 'singular'
+                ? "bg-foreground text-background"
+                : "bg-muted text-muted-foreground hover:text-foreground"
             )}
-          </TableRow>
-        </TableHeader>
-        <TableBody>
-          {CASES.map((caseItem) => {
-            const singularForm = declensions.singular[caseItem.key as CaseKey];
-            const pluralForm = declensions.plural?.[caseItem.key as CaseKey] ?? null;
+          >
+            Singular
+          </button>
+          <button
+            onClick={() => setActiveTab('plural')}
+            className={cn(
+              "flex-1 py-2 text-sm font-medium rounded-md transition-colors",
+              activeTab === 'plural'
+                ? "bg-foreground text-background"
+                : "bg-muted text-muted-foreground hover:text-foreground"
+            )}
+          >
+            Plural
+          </button>
+        </div>
+      )}
 
-            const parsedSingular = parseArticulatedForm(singularForm);
-            const parsedPlural = parseArticulatedForm(pluralForm);
+      {/* Compact case rows */}
+      <div className="space-y-1">
+        {CASES.map((caseItem) => {
+          const form = currentForms?.[caseItem.key as CaseKey] ?? null;
+          const parsed = parseArticulatedForm(form);
 
-            return (
-              <TableRow key={caseItem.key} className="border-border">
-                <TableCell className="font-medium text-muted-foreground">
-                  <span className="hidden sm:inline">{caseItem.label}</span>
-                  <span className="sm:hidden">{caseItem.abbr}</span>
-                </TableCell>
-                <TableCell className="font-medium">
-                  {parsedSingular ? (
-                    <>
-                      <span className={genderTextClass}>{parsedSingular.article}</span>{' '}
-                      <span className="text-foreground">{parsedSingular.noun}</span>
-                    </>
-                  ) : (
-                    <span className="text-muted-foreground italic">—</span>
-                  )}
-                </TableCell>
-                {hasPluralForms && (
-                  <TableCell className="font-medium">
-                    {parsedPlural ? (
-                      <>
-                        <span className={genderTextClass}>{parsedPlural.article}</span>{' '}
-                        <span className="text-foreground">{parsedPlural.noun}</span>
-                      </>
-                    ) : (
-                      <span className="text-muted-foreground italic">—</span>
-                    )}
-                  </TableCell>
+          return (
+            <div
+              key={caseItem.key}
+              className="flex items-center justify-between py-2 px-3 rounded-md bg-muted/40"
+            >
+              <span className="text-xs font-mono uppercase tracking-wider text-muted-foreground w-16">
+                {caseItem.abbr}
+              </span>
+              <span className="font-medium text-right">
+                {parsed ? (
+                  <>
+                    <span className={genderTextClass}>{parsed.article}</span>{' '}
+                    <span className="text-foreground">{parsed.noun}</span>
+                  </>
+                ) : (
+                  <span className="text-muted-foreground italic">—</span>
                 )}
-              </TableRow>
-            );
-          })}
-        </TableBody>
-      </Table>
+              </span>
+            </div>
+          );
+        })}
+      </div>
     </div>
   );
 }

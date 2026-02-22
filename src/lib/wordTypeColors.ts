@@ -1,38 +1,46 @@
 import type { WordType } from '@/types/dictionary';
 
 // Word type color classes - designed to not clash with gender colors (Red/Blue/Green)
-export const WORD_TYPE_COLORS: Record<WordType, { badge: string; text: string }> = {
+export const WORD_TYPE_COLORS: Record<WordType, { badge: string; text: string; glow: string }> = {
   noun: {
     badge: 'bg-wordtype-noun/10 text-wordtype-noun border-wordtype-noun/30',
     text: 'text-wordtype-noun',
+    glow: 'shadow-[0_0_30px_-5px_hsl(var(--wordtype-noun)/0.4)]',
   },
   verb: {
     badge: 'bg-wordtype-verb/10 text-wordtype-verb border-wordtype-verb/30',
     text: 'text-wordtype-verb',
+    glow: 'shadow-[0_0_30px_-5px_hsl(var(--wordtype-verb)/0.4)]',
   },
   adjective: {
     badge: 'bg-wordtype-adjective/10 text-wordtype-adjective border-wordtype-adjective/30',
     text: 'text-wordtype-adjective',
+    glow: 'shadow-[0_0_30px_-5px_hsl(var(--wordtype-adjective)/0.4)]',
   },
   adverb: {
     badge: 'bg-wordtype-adverb/10 text-wordtype-adverb border-wordtype-adverb/30',
     text: 'text-wordtype-adverb',
+    glow: 'shadow-[0_0_30px_-5px_hsl(var(--wordtype-adverb)/0.4)]',
   },
   pronoun: {
     badge: 'bg-wordtype-pronoun/10 text-wordtype-pronoun border-wordtype-pronoun/30',
     text: 'text-wordtype-pronoun',
+    glow: 'shadow-[0_0_30px_-5px_hsl(var(--wordtype-pronoun)/0.4)]',
   },
   preposition: {
     badge: 'bg-wordtype-preposition/10 text-wordtype-preposition border-wordtype-preposition/30',
     text: 'text-wordtype-preposition',
+    glow: 'shadow-[0_0_30px_-5px_hsl(var(--wordtype-preposition)/0.4)]',
   },
   conjunction: {
     badge: 'bg-wordtype-conjunction/10 text-wordtype-conjunction border-wordtype-conjunction/30',
     text: 'text-wordtype-conjunction',
+    glow: 'shadow-[0_0_30px_-5px_hsl(var(--wordtype-conjunction)/0.4)]',
   },
   article: {
     badge: 'bg-wordtype-article/10 text-wordtype-article border-wordtype-article/30',
     text: 'text-wordtype-article',
+    glow: 'shadow-[0_0_30px_-5px_hsl(var(--wordtype-article)/0.4)]',
   },
 };
 
