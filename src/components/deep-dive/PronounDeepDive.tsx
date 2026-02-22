@@ -14,6 +14,8 @@ interface PronounDeepDiveProps {
   englishTranslation: string;
   metadata: PronounMetadata;
   grammarNote: string | null;
+  exampleSentenceDe: string | null;
+  exampleSentenceEn: string | null;
 }
 
 const CASES = [
@@ -28,7 +30,9 @@ export function PronounDeepDive({
   germanWord, 
   englishTranslation, 
   metadata,
-  grammarNote 
+  grammarNote,
+  exampleSentenceDe,
+  exampleSentenceEn,
 }: PronounDeepDiveProps) {
   return (
     <div className="space-y-6">
@@ -43,6 +47,14 @@ export function PronounDeepDive({
               <p className="text-xl text-muted-foreground mt-2">
                 {englishTranslation}
               </p>
+              {exampleSentenceDe && (
+                <div className="mt-4 space-y-1">
+                  <p className="italic text-foreground/90">„{exampleSentenceDe}"</p>
+                  {exampleSentenceEn && (
+                    <p className="text-sm text-muted-foreground">"{exampleSentenceEn}"</p>
+                  )}
+                </div>
+              )}
             </div>
             <span className="px-3 py-1 rounded-full text-sm font-medium capitalize bg-fuchsia-100 text-fuchsia-700 dark:bg-fuchsia-900/30 dark:text-fuchsia-400">
               Pronoun

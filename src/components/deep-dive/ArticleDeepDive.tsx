@@ -14,6 +14,8 @@ interface ArticleDeepDiveProps {
   englishTranslation: string;
   metadata: ArticleMetadata;
   grammarNote: string | null;
+  exampleSentenceDe: string | null;
+  exampleSentenceEn: string | null;
 }
 
 const CASES = [
@@ -29,7 +31,9 @@ export function ArticleDeepDive({
   germanWord, 
   englishTranslation, 
   metadata,
-  grammarNote 
+  grammarNote,
+  exampleSentenceDe,
+  exampleSentenceEn,
 }: ArticleDeepDiveProps) {
   const getArticleType = () => {
     if (metadata.type === 'negative') return 'Negative Article';
@@ -51,6 +55,14 @@ export function ArticleDeepDive({
               <p className="text-xl text-muted-foreground mt-2">
                 {englishTranslation}
               </p>
+              {exampleSentenceDe && (
+                <div className="mt-4 space-y-1">
+                  <p className="italic text-foreground/90">„{exampleSentenceDe}"</p>
+                  {exampleSentenceEn && (
+                    <p className="text-sm text-muted-foreground">"{exampleSentenceEn}"</p>
+                  )}
+                </div>
+              )}
             </div>
             <span 
               className="px-3 py-1 rounded-full text-sm font-medium capitalize"

@@ -18,6 +18,8 @@ export type Database = {
         Row: {
           created_at: string
           english_translation: string
+          example_sentence_de: string | null
+          example_sentence_en: string | null
           german_word: string
           grammar_note: string | null
           id: string
@@ -28,6 +30,8 @@ export type Database = {
         Insert: {
           created_at?: string
           english_translation: string
+          example_sentence_de?: string | null
+          example_sentence_en?: string | null
           german_word: string
           grammar_note?: string | null
           id?: string
@@ -38,6 +42,8 @@ export type Database = {
         Update: {
           created_at?: string
           english_translation?: string
+          example_sentence_de?: string | null
+          example_sentence_en?: string | null
           german_word?: string
           grammar_note?: string | null
           id?: string

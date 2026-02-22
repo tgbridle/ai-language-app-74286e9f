@@ -89,6 +89,8 @@ export interface DictionaryEntry {
   metadata: DictionaryMetadata;
   search_forms: string[];
   grammar_note: string | null;
+  example_sentence_de: string | null;
+  example_sentence_en: string | null;
   created_at: string;
 }
 

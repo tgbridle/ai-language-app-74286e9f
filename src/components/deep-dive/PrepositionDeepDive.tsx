@@ -9,6 +9,8 @@ interface PrepositionDeepDiveProps {
   englishTranslation: string;
   metadata: PrepositionMetadata;
   grammarNote: string | null;
+  exampleSentenceDe: string | null;
+  exampleSentenceEn: string | null;
 }
 
 export function PrepositionDeepDive({
@@ -16,6 +18,8 @@ export function PrepositionDeepDive({
   englishTranslation,
   metadata,
   grammarNote,
+  exampleSentenceDe,
+  exampleSentenceEn,
 }: PrepositionDeepDiveProps) {
   // Build the case label based on the case type
   const getCaseLabel = () => {
@@ -57,6 +61,14 @@ export function PrepositionDeepDive({
               <p className="text-xl text-muted-foreground mt-2">
                 {englishTranslation}
               </p>
+              {exampleSentenceDe && (
+                <div className="mt-4 space-y-1">
+                  <p className="italic text-foreground/90">„{exampleSentenceDe}"</p>
+                  {exampleSentenceEn && (
+                    <p className="text-sm text-muted-foreground">"{exampleSentenceEn}"</p>
+                  )}
+                </div>
+              )}
             </div>
             <span
               className={cn(

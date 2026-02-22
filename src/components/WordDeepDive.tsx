@@ -247,6 +247,8 @@ export function WordDeepDive({ entryId, onBack }: WordDeepDiveProps) {
           englishTranslation={entry.english_translation}
           metadata={entry.metadata}
           grammarNote={entry.grammar_note}
+          exampleSentenceDe={entry.example_sentence_de}
+          exampleSentenceEn={entry.example_sentence_en}
         />
       </div>
     );
@@ -274,6 +276,8 @@ export function WordDeepDive({ entryId, onBack }: WordDeepDiveProps) {
           englishTranslation={entry.english_translation}
           metadata={entry.metadata}
           grammarNote={entry.grammar_note}
+          exampleSentenceDe={entry.example_sentence_de}
+          exampleSentenceEn={entry.example_sentence_en}
         />
       </div>
     );
@@ -301,6 +305,8 @@ export function WordDeepDive({ entryId, onBack }: WordDeepDiveProps) {
           englishTranslation={entry.english_translation}
           metadata={entry.metadata}
           grammarNote={entry.grammar_note}
+          exampleSentenceDe={entry.example_sentence_de}
+          exampleSentenceEn={entry.example_sentence_en}
         />
       </div>
     );
@@ -328,6 +334,8 @@ export function WordDeepDive({ entryId, onBack }: WordDeepDiveProps) {
           englishTranslation={entry.english_translation}
           metadata={entry.metadata}
           grammarNote={entry.grammar_note}
+          exampleSentenceDe={entry.example_sentence_de}
+          exampleSentenceEn={entry.example_sentence_en}
         />
       </div>
     );
@@ -355,6 +363,8 @@ export function WordDeepDive({ entryId, onBack }: WordDeepDiveProps) {
           englishTranslation={entry.english_translation}
           metadata={entry.metadata}
           grammarNote={entry.grammar_note}
+          exampleSentenceDe={entry.example_sentence_de}
+          exampleSentenceEn={entry.example_sentence_en}
         />
       </div>
     );
@@ -388,6 +398,14 @@ export function WordDeepDive({ entryId, onBack }: WordDeepDiveProps) {
                 <p className="text-xl text-muted-foreground mt-2">
                   {entry.english_translation}
                 </p>
+                {entry.example_sentence_de && (
+                  <div className="mt-4 space-y-1">
+                    <p className="italic text-foreground/90">„{entry.example_sentence_de}"</p>
+                    {entry.example_sentence_en && (
+                      <p className="text-sm text-muted-foreground">"{entry.example_sentence_en}"</p>
+                    )}
+                  </div>
+                )}
               </div>
               {getTypeBadge()}
             </div>
