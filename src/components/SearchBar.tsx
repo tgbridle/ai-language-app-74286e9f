@@ -122,10 +122,10 @@ export function SearchBar({ onSelectEntry, onFocusChange }: SearchBarProps) {
       <span className="flex items-center justify-between w-full">
         <span className="flex items-center gap-2 min-w-0">
           <span className="font-semibold text-foreground truncate">{germanPart}</span>
-          <span className="font-mono text-[9px] uppercase tracking-widest text-muted-foreground/50 font-medium select-none">DE</span>
+          <span className="font-mono text-[9px] uppercase tracking-widest text-muted-foreground font-medium select-none">DE</span>
           <span className="text-muted-foreground/30 mx-0.5">·</span>
           <span className="text-muted-foreground truncate">{englishPart}</span>
-          <span className="font-mono text-[9px] uppercase tracking-widest text-muted-foreground/50 font-medium select-none">EN</span>
+          <span className="font-mono text-[9px] uppercase tracking-widest text-muted-foreground font-medium select-none">EN</span>
         </span>
         <span className={cn("text-xs ml-3 shrink-0 font-mono uppercase tracking-wider", WORD_TYPE_COLORS[typePart].text)}>
           {typePart}
@@ -183,7 +183,7 @@ export function SearchBar({ onSelectEntry, onFocusChange }: SearchBarProps) {
           className={cn(
             "absolute z-50 w-full rounded-xl overflow-hidden max-h-72 overflow-y-auto",
             // Glassmorphism container
-            "bg-gradient-to-br from-primary/[0.04] via-secondary/[0.06] to-primary/[0.04]",
+            "bg-card/95 dark:bg-card/90",
             "backdrop-blur-xl",
             "border border-white/20 dark:border-white/10",
             "shadow-xl shadow-primary/5",
@@ -196,13 +196,16 @@ export function SearchBar({ onSelectEntry, onFocusChange }: SearchBarProps) {
               role="option"
               aria-selected={highlightedIndex === index}
               onClick={() => handleSelect(suggestion)}
-              onMouseEnter={() => setHighlightedIndex(index)}
+              onMouseMove={() => {
+                // Only update on mouse move to avoid fighting with keyboard nav
+                if (highlightedIndex !== index) setHighlightedIndex(index);
+              }}
               className={cn(
-                "px-4 py-3 cursor-pointer transition-all duration-150",
-                "border-b border-white/10 dark:border-white/5 last:border-b-0",
+                "px-4 py-3 cursor-pointer transition-colors duration-75",
+                "border-b border-border/50 last:border-b-0",
                 highlightedIndex === index
-                  ? "bg-white/30 dark:bg-white/10 backdrop-blur-sm"
-                  : "hover:bg-white/20 dark:hover:bg-white/5"
+                  ? "bg-accent"
+                  : ""
               )}
             >
               {formatSuggestion(suggestion)}
