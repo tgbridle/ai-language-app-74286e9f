@@ -16,7 +16,7 @@ export function SearchBar({ onSelectEntry }: SearchBarProps) {
   const [query, setQuery] = useState('');
   const [isOpen, setIsOpen] = useState(false);
   const [highlightedIndex, setHighlightedIndex] = useState(-1);
-  const { suggestions, isLoading, searchTerm, isGerman } = useDictionarySearch(query);
+  const { suggestions, isLoading } = useDictionarySearch(query);
   const inputRef = useRef<HTMLInputElement>(null);
   const listRef = useRef<HTMLUListElement>(null);
   const isMobile = useIsMobile();
@@ -80,7 +80,7 @@ export function SearchBar({ onSelectEntry }: SearchBarProps) {
     inputRef.current?.focus();
   };
 
-  // Format suggestion based on search language
+  // Format suggestion with standardized template
   const formatSuggestion = (suggestion: DictionarySuggestion) => {
     // Extract article from declensions for nouns
     let article = '';
@@ -97,25 +97,18 @@ export function SearchBar({ onSelectEntry }: SearchBarProps) {
     const englishPart = suggestion.english_translation;
     const typePart = suggestion.word_type;
 
-    if (isGerman) {
-      // German input: bold German, muted English
-      return (
-        <>
-          <span className="font-semibold text-foreground">{germanPart}</span>
-          <span className={cn("text-xs ml-1", WORD_TYPE_COLORS[typePart].text)}>({typePart})</span>
-          <span className="text-muted-foreground ml-2">— {englishPart}</span>
-        </>
-      );
-    } else {
-      // English input: bold English, muted German
-      return (
-        <>
-          <span className="font-semibold text-foreground">{englishPart}</span>
-          <span className="text-muted-foreground ml-2">— {germanPart}</span>
-          <span className={cn("text-xs ml-1", WORD_TYPE_COLORS[typePart].text)}>({typePart})</span>
-        </>
-      );
-    }
+    return (
+      <span className="flex items-center justify-between w-full">
+        <span className="flex items-center gap-1.5 min-w-0">
+          <span className="text-[10px] uppercase tracking-wider text-muted-foreground/70 font-medium select-none">DE</span>
+          <span className="font-semibold text-foreground truncate">{germanPart}</span>
+          <span className="text-muted-foreground mx-1">—</span>
+          <span className="text-[10px] uppercase tracking-wider text-muted-foreground/70 font-medium select-none">EN</span>
+          <span className="text-muted-foreground truncate">{englishPart}</span>
+        </span>
+        <span className={cn("text-xs ml-3 shrink-0", WORD_TYPE_COLORS[typePart].text)}>({typePart})</span>
+      </span>
+    );
   };
 
   return (

@@ -108,7 +108,15 @@ export function useDictionarySearch(query: string) {
           return a.german_word.localeCompare(b.german_word);
         });
 
-        const typedData: DictionarySuggestion[] = scoredData.slice(0, 10).map(item => ({
+        // Deduplicate by id (same entry can match german + english)
+        const seen = new Set<string>();
+        const unique = scoredData.filter(item => {
+          if (seen.has(item.id)) return false;
+          seen.add(item.id);
+          return true;
+        });
+
+        const typedData: DictionarySuggestion[] = unique.slice(0, 10).map(item => ({
           id: item.id,
           german_word: item.german_word,
           english_translation: item.english_translation,
