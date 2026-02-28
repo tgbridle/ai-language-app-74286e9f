@@ -149,7 +149,7 @@ export function SearchBar({ onSelectEntry, onFocusChange, externalQuery, onExter
     <div ref={containerRef} className="relative w-full max-w-xl mx-auto" onBlur={handleBlur}>
       <div className="relative">
         <Search className={cn(
-          "absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 transition-colors duration-200",
+          "absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 transition-colors duration-200",
           isFocused ? "text-primary" : "text-muted-foreground"
         )} />
         <Input
@@ -160,7 +160,7 @@ export function SearchBar({ onSelectEntry, onFocusChange, externalQuery, onExter
           onKeyDownCapture={handleKeyDown}
           onFocus={handleFocus}
           className={cn(
-            "pl-11 pr-12 h-14 text-lg placeholder:text-muted-foreground/50 placeholder:text-base placeholder:font-normal transition-all duration-300",
+            "pl-10 pr-12 h-14 text-lg placeholder:text-muted-foreground/50 placeholder:text-base placeholder:font-normal transition-all duration-300",
             "bg-card/80 backdrop-blur-[10px] border border-border/60",
             "shadow-[0_2px_20px_-4px_hsl(217,91%,60%,0.15),0_1px_4px_-1px_hsl(0,0%,0%,0.06)]",
             isFocused
