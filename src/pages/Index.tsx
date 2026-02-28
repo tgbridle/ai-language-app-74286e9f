@@ -94,7 +94,7 @@ const Index = () => {
                     className="flex items-center gap-1 mb-4"
                   >
                     <LanglyLogo size="sm" />
-                    <span className="text-lg font-bold tracking-tight bg-gradient-to-r from-[hsl(217,91%,60%)] to-[hsl(270,60%,60%)] bg-clip-text text-transparent">
+                    <span className="text-lg font-bold tracking-tight text-foreground">
                       Langly
                     </span>
                   </motion.div>
