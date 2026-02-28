@@ -69,10 +69,10 @@ const Index = () => {
                     transition={{ duration: 0.3, ease: 'easeInOut' }}
                     className="text-center mb-10 sm:mb-12"
                   >
-                    <div className="flex justify-center -mb-1">
+                    <div className="flex justify-center">
                       <LanglyLogo size="lg" />
                     </div>
-                    <h1 className="text-5xl sm:text-6xl font-bold tracking-tight mb-4 bg-gradient-to-r from-[hsl(217,91%,60%)] to-[hsl(270,60%,60%)] bg-clip-text text-transparent pb-1">
+                    <h1 className="text-5xl sm:text-6xl font-bold tracking-tight mb-4 text-foreground pb-2 leading-tight">
                       Langly
                     </h1>
                     <p className="text-muted-foreground text-lg sm:text-xl font-medium">
