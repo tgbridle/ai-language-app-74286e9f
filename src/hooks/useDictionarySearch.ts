@@ -66,7 +66,7 @@ export function useDictionarySearch(query: string) {
       try {
         const normalizedQuery = normalizeGerman(searchTerm);
         
-        // Fetch a broad set — we filter client-side with normalization
+        // Fetch a broad set - we filter client-side with normalization
         const { data, error } = await supabase
           .from('dictionary')
           .select('id, german_word, english_translation, word_type, metadata, search_forms')

@@ -8,7 +8,7 @@ const HELP_SECTIONS = [
     icon: Search,
     title: 'Search',
     description:
-      'Type any German or English word into the search bar. Results appear instantly as you type — tap one to dive deeper.',
+      'Type any German or English word into the search bar. Results appear instantly as you type. Tap one to dive deeper.',
   },
   {
     icon: BookOpen,
@@ -20,7 +20,7 @@ const HELP_SECTIONS = [
     icon: Languages,
     title: 'Word Types',
     description:
-      'Words are colour-coded by type — nouns, verbs, adjectives, and more — so you can spot patterns at a glance.',
+      'Words are colour-coded by type: nouns, verbs, adjectives, and more, so you can spot patterns at a glance.',
   },
   {
     icon: Lightbulb,

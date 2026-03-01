@@ -91,7 +91,7 @@ export function PronounDeepDive({
                       {metadata.declension[caseItem.key as CaseKey]}
                     </TableCell>
                     <TableCell className="text-muted-foreground">
-                      {caseItem.key === 'nominative' ? englishTranslation : '—'}
+                      {caseItem.key === 'nominative' ? englishTranslation : '-'}
                     </TableCell>
                   </TableRow>
                 ))}
