@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { ArrowLeft, BookOpen, Search, Languages, Lightbulb, GraduationCap } from 'lucide-react';
 import { LanglyLogo } from '@/components/LanglyLogo';
+import { ContactFormDialog } from '@/components/ContactFormDialog';
 
 const HELP_SECTIONS = [
   {
@@ -105,6 +106,10 @@ const Help = () => {
               </motion.div>
             ))}
           </motion.div>
+
+          <div className="flex justify-center">
+            <ContactFormDialog />
+          </div>
         </div>
       </div>
     </div>
