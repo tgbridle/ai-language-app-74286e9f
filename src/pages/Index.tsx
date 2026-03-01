@@ -1,5 +1,7 @@
 import { useState, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { Link } from 'react-router-dom';
+import { HelpCircle } from 'lucide-react';
 import { SearchBar } from '@/components/SearchBar';
 import { WordDeepDive } from '@/components/WordDeepDive';
 import { LanglyLogo } from '@/components/LanglyLogo';
@@ -54,6 +56,17 @@ const Index = () => {
 
           <div className="container mx-auto px-4 py-10 sm:py-16 relative z-40">
             <main className="max-w-2xl mx-auto">
+              {/* Help link */}
+              <div className="flex justify-end mb-2">
+                <Link
+                  to="/help"
+                  className="p-2 rounded-full text-muted-foreground hover:text-foreground hover:bg-muted transition-colors"
+                  aria-label="Help"
+                >
+                  <HelpCircle className="w-5 h-5" />
+                </Link>
+              </div>
+
               {/* Hero Branding Section */}
               <AnimatePresence mode="wait">
                 {!isSearchFocused && (
