@@ -28,10 +28,6 @@ const Index = () => {
   return (
     <div className="min-h-screen bg-background relative overflow-hidden">
       {/* Mesh gradient blobs */}
-      <div className="pointer-events-none fixed inset-0 z-0" aria-hidden="true">
-        <div className="absolute -top-40 -right-40 w-[600px] h-[600px] rounded-full bg-[hsl(217,91%,60%)] opacity-[0.05] blur-[120px]" />
-        <div className="absolute -bottom-40 -left-40 w-[500px] h-[500px] rounded-full bg-[hsl(270,60%,60%)] opacity-[0.05] blur-[120px]" />
-      </div>
 
       {selectedEntryId ? (
         <div className="container mx-auto px-4 py-10 sm:py-16 relative z-10">
