@@ -89,7 +89,7 @@ export function NounDeclensionTable({ declensions, gender }: NounDeclensionTable
                     <span className="text-foreground">{parsed.noun}</span>
                   </>
                 ) : (
-                  <span className="text-muted-foreground italic">—</span>
+                  <span className="text-muted-foreground italic">-</span>
                 )}
               </span>
             </div>
