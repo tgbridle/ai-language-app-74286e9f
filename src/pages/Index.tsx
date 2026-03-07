@@ -68,15 +68,15 @@ const Index = () => {
               </div>
 
               {/* Hero Branding Section */}
-              <AnimatePresence>
+              <AnimatePresence mode="wait">
                 {!isSearchFocused && (
                   <motion.header
                     key="hero"
                     initial={{ opacity: 0, y: -20 }}
                     animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: -20 }}
-                    transition={{ duration: 0.25, ease: 'easeInOut' }}
-                    className="text-center mb-10 sm:mb-12 overflow-hidden"
+                    exit={{ opacity: 0, y: -30, height: 0, marginBottom: 0 }}
+                    transition={{ duration: 0.3, ease: 'easeInOut' }}
+                    className="text-center mb-10 sm:mb-12"
                   >
                     <div className="flex justify-center">
                       <LanglyLogo size="lg" />
@@ -113,7 +113,11 @@ const Index = () => {
               </AnimatePresence>
 
               {/* Search Section */}
-              <div className="space-y-6">
+              <motion.div
+                layout
+                transition={{ duration: 0.3, ease: 'easeInOut' }}
+                className="space-y-6"
+              >
                 <SearchBar
                   onSelectEntry={setSelectedEntryId}
                   onFocusChange={handleSearchFocus}
@@ -141,7 +145,7 @@ const Index = () => {
                       </motion.div>
                   )}
                 </AnimatePresence>
-              </div>
+              </motion.div>
             </main>
           </div>
         </>
