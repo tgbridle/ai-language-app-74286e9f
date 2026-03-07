@@ -207,7 +207,7 @@ export function SearchBar({ onSelectEntry, onFocusChange, externalQuery, onExter
               key={suggestion.id}
               role="option"
               aria-selected={highlightedIndex === index}
-              onClick={() => handleSelect(suggestion)}
+              onMouseDown={(e) => { e.preventDefault(); handleSelect(suggestion); }}
               onMouseMove={() => {
                 // Only update on mouse move to avoid fighting with keyboard nav
                 if (highlightedIndex !== index) setHighlightedIndex(index);
