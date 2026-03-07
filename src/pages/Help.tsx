@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { ArrowLeft, BookOpen, Search, Languages, Lightbulb, GraduationCap, Info } from 'lucide-react';
+import { ArrowLeft, BookOpen, Search, Languages, Lightbulb, Info } from 'lucide-react';
 import { LanglyLogo } from '@/components/LanglyLogo';
 import { ContactFormDialog } from '@/components/ContactFormDialog';
 
@@ -40,12 +40,6 @@ const HELP_SECTIONS = [
     title: 'Discovery Chips',
     description:
       'Not sure where to start? Tap a suggestion chip on the home screen to explore a curated word instantly.',
-  },
-  {
-    icon: GraduationCap,
-    title: 'Grammar Tables',
-    description:
-      'Verbs show full conjugation grids across all tenses. Nouns and articles display declension tables by case and gender.',
   },
 ];
 
