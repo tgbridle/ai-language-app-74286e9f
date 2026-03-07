@@ -1,4 +1,4 @@
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { HelpCircle } from 'lucide-react';
@@ -19,9 +19,23 @@ const DISCOVERY_CHIPS = [
 const Index = () => {
   const [selectedEntryId, setSelectedEntryId] = useState<string | null>(null);
   const [isSearchFocused, setIsSearchFocused] = useState(false);
+  // Delayed version of focus state — stays true a bit longer so layout doesn't shift until mini-header has faded
+  const [isLayoutCompact, setIsLayoutCompact] = useState(false);
+  const compactTimerRef = useRef<ReturnType<typeof setTimeout>>();
 
   const handleSearchFocus = useCallback((focused: boolean) => {
     setIsSearchFocused(focused);
+    if (focused) {
+      clearTimeout(compactTimerRef.current);
+      setIsLayoutCompact(true);
+    } else {
+      // Delay layout expansion so mini-header fades out first
+      compactTimerRef.current = setTimeout(() => setIsLayoutCompact(false), 180);
+    }
+  }, []);
+
+  useEffect(() => {
+    return () => clearTimeout(compactTimerRef.current);
   }, []);
 
   const handleChipClick = (entryId: string) => {
@@ -55,7 +69,7 @@ const Index = () => {
             )}
           </AnimatePresence>
 
-          <div className={cn("container mx-auto px-4 relative z-40", isSearchFocused ? "py-1 sm:py-4" : "py-10 sm:py-16")}>
+          <div className={cn("container mx-auto px-4 relative z-40 transition-[padding] duration-300 ease-in-out", isLayoutCompact ? "py-1 sm:py-4" : "py-10 sm:py-16")}>
             <main className="max-w-2xl mx-auto">
               {/* Help link */}
               <div className="flex justify-end mb-2">
