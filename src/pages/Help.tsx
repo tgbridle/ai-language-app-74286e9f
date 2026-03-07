@@ -41,12 +41,6 @@ const HELP_SECTIONS = [
     description:
       'Not sure where to start? Tap a suggestion chip on the home screen to explore a curated word instantly.',
   },
-  {
-    icon: GraduationCap,
-    title: 'Grammar Tables',
-    description:
-      'Verbs show full conjugation grids across all tenses. Nouns and articles display declension tables by case and gender.',
-  },
 ];
 
 const container = {
