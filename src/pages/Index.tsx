@@ -81,7 +81,7 @@ const Index = () => {
                     <div className="flex justify-center">
                       <LanglyLogo size="lg" />
                     </div>
-                    <h1 className="text-5xl sm:text-6xl font-bold tracking-tight mb-4 text-foreground pb-2 leading-tight">
+                    <h1 className="text-5xl sm:text-6xl font-bold tracking-tight mb-4 text-[#2d3748] pb-2 leading-tight">
                       Langly
                     </h1>
                     <p className="text-muted-foreground text-lg sm:text-xl font-medium leading-relaxed">
