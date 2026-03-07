@@ -2,6 +2,7 @@ import { useState, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { HelpCircle } from 'lucide-react';
+import { cn } from '@/lib/utils';
 import { SearchBar } from '@/components/SearchBar';
 import { WordDeepDive } from '@/components/WordDeepDive';
 import { LanglyLogo } from '@/components/LanglyLogo';
