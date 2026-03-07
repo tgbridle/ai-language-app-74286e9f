@@ -49,7 +49,7 @@ export function ConjunctionDeepDive({
                 </div>
               )}
             </div>
-            <span className="px-3 py-1 rounded-full text-sm font-medium capitalize bg-yellow-100 text-yellow-700 dark:bg-yellow-900/30 dark:text-yellow-400">
+            <span className={cn('px-3 py-1 rounded-full text-sm font-medium capitalize border', WORD_TYPE_COLORS.conjunction.badge)}>
               Conjunction
             </span>
           </div>
