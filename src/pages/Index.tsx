@@ -2,6 +2,7 @@ import { useState, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { HelpCircle } from 'lucide-react';
+import { cn } from '@/lib/utils';
 import { SearchBar } from '@/components/SearchBar';
 import { WordDeepDive } from '@/components/WordDeepDive';
 import { LanglyLogo } from '@/components/LanglyLogo';
@@ -54,7 +55,7 @@ const Index = () => {
             )}
           </AnimatePresence>
 
-          <div className="container mx-auto px-4 py-10 sm:py-16 relative z-40">
+          <div className={cn("container mx-auto px-4 relative z-40", isSearchFocused ? "py-4 sm:py-8" : "py-10 sm:py-16")}>
             <main className="max-w-2xl mx-auto">
               {/* Help link */}
               <div className="flex justify-end mb-2">
