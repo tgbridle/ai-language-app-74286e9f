@@ -69,7 +69,7 @@ const Index = () => {
             )}
           </AnimatePresence>
 
-          <div className={cn("container mx-auto px-4 relative z-40", isSearchFocused ? "py-1 sm:py-4" : "py-10 sm:py-16")}>
+          <div className={cn("container mx-auto px-4 relative z-40 transition-[padding] duration-300 ease-in-out", isLayoutCompact ? "py-1 sm:py-4" : "py-10 sm:py-16")}>
             <main className="max-w-2xl mx-auto">
               {/* Help link */}
               <div className="flex justify-end mb-2">
