@@ -110,7 +110,7 @@ export function PronounDeepDive({
 
       {/* Grammar Insight */}
       {grammarNote && (
-        <Card className="border border-border shadow-sm border-l-4 border-l-fuchsia-500">
+        <Card className="border border-border shadow-sm border-l-4" style={{ borderLeftColor: 'hsl(var(--wordtype-pronoun))' }}>
           <CardHeader className="pb-2">
             <CardTitle className="text-lg font-semibold text-foreground">
               Grammar Insight

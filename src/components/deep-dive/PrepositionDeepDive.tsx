@@ -125,9 +125,9 @@ export function PrepositionDeepDive({
         </Card>
       )}
 
-      {/* Grammar Insight Card - Indigo left border */}
+      {/* Grammar Insight Card */}
       {grammarNote && (
-        <Card className="border border-border shadow-sm border-l-4 border-l-indigo-700 bg-muted/30">
+        <Card className="border border-border shadow-sm border-l-4 bg-muted/30" style={{ borderLeftColor: 'hsl(var(--wordtype-preposition))' }}>
           <CardHeader className="pb-2">
             <CardTitle className="text-lg font-semibold text-foreground flex items-center gap-2">
               <BookOpen className="h-5 w-5 text-indigo-700 dark:text-indigo-400" />

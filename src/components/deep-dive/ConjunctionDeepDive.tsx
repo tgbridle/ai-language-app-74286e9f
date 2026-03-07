@@ -72,7 +72,7 @@ export function ConjunctionDeepDive({
 
       {/* How to use it */}
       {grammarNote && (
-        <Card className="border border-border shadow-sm border-l-4 border-l-yellow-500">
+        <Card className="border border-border shadow-sm border-l-4" style={{ borderLeftColor: 'hsl(var(--wordtype-conjunction))' }}>
           <CardHeader className="pb-2">
             <CardTitle className="text-lg font-semibold text-foreground">
               How to use it:
