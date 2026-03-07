@@ -63,7 +63,7 @@ const Help = () => {
             </Link>
             <div className="flex-1" />
             <LanglyLogo size="sm" />
-            <span className="text-lg font-bold tracking-tight text-foreground">Langly</span>
+            <span className="text-lg font-bold tracking-tight text-[#2d3748]">Langly</span>
           </div>
 
           {/* Title */}
