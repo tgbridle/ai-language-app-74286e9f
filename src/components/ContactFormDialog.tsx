@@ -66,7 +66,7 @@ function ContactForm({ onSuccess }: { onSuccess: () => void }) {
         body: values,
       });
       if (error) throw error;
-      toast({ title: 'Message sent', description: "Thanks for reaching out — we'll get back to you soon." });
+      toast({ title: 'Message sent', description: "Thanks for reaching out - we'll get back to you soon." });
       form.reset();
       onSuccess();
     } catch {
