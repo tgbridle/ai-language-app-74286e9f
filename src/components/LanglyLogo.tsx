@@ -29,33 +29,31 @@ export function LanglyLogo({ size = 'lg', className }: LanglyLogoProps) {
           <stop offset="100%" stopColor="#2c4a7c" stopOpacity="0.6" />
         </linearGradient>
       </defs>
-      {/* Left page fill */}
+      {/* Left page */}
       <path
-        d="M2 6s1.5-2 5-2 5 2 5 2v11s-1.5-1-5-1-5 1-5 1V6z"
+        d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2V3z"
         fill="url(#leftPage)"
-      />
-      {/* Right page fill */}
-      <path
-        d="M12 6s1.5-2 5-2 5 2 5 2v11s-1.5-1-5-1-5 1-5 1V6z"
-        fill="url(#rightPage)"
-      />
-      {/* Outline strokes */}
-      <path
-        d="M2 3h6a4 4 0 0 1 4 4 4 4 0 0 1 4-4h6v14a2 2 0 0 1-2 2h-4.5a2 2 0 0 0-1.5.7 2 2 0 0 0-1.5-.7H7a2 2 0 0 1-2-2V5a2 2 0 0 0-2-2z"
         stroke="currentColor"
         strokeWidth="1.5"
         strokeLinecap="round"
         strokeLinejoin="round"
-        fill="none"
-        opacity="0.8"
+      />
+      {/* Right page */}
+      <path
+        d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7V3z"
+        fill="url(#rightPage)"
+        stroke="currentColor"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
       {/* Spine */}
       <path
-        d="M12 7v13"
+        d="M12 7v14"
         stroke="#5a3a3a"
         strokeWidth="1.5"
         strokeLinecap="round"
-        opacity="0.6"
+        opacity="0.5"
       />
     </svg>
   );
