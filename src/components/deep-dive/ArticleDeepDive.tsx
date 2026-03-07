@@ -65,11 +65,7 @@ export function ArticleDeepDive({
               )}
             </div>
             <span 
-              className="px-3 py-1 rounded-full text-sm font-medium capitalize"
-              style={{ 
-                backgroundColor: 'rgba(120, 53, 15, 0.1)', 
-                color: '#78350F' 
-              }}
+              className={cn('px-3 py-1 rounded-full text-sm font-medium capitalize border', WORD_TYPE_COLORS.article.badge)}
             >
               {getArticleType()}
             </span>
