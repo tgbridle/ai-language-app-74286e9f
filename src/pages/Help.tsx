@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { ArrowLeft, BookOpen, Search, Languages, Lightbulb, GraduationCap, Info } from 'lucide-react';
+import { ArrowLeft, BookOpen, Search, Languages, Lightbulb, Info } from 'lucide-react';
 import { LanglyLogo } from '@/components/LanglyLogo';
 import { ContactFormDialog } from '@/components/ContactFormDialog';
 
