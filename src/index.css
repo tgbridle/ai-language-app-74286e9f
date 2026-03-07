@@ -129,14 +129,14 @@
     --sidebar-ring: 198 93% 59%;
 
     /* Word Type Colors - Dark mode */
-    --wordtype-noun: 215 14% 60%;
-    --wordtype-verb: 270 50% 65%;
-    --wordtype-adjective: 35 80% 60%;
-    --wordtype-adverb: 175 50% 55%;
-    --wordtype-pronoun: 320 50% 60%;
-    --wordtype-preposition: 240 50% 65%;
-    --wordtype-conjunction: 45 85% 55%;
-    --wordtype-article: 25 35% 55%;
+    --wordtype-noun: 0 75% 60%;
+    --wordtype-verb: 270 65% 70%;
+    --wordtype-adjective: 25 90% 65%;
+    --wordtype-adverb: 160 65% 55%;
+    --wordtype-pronoun: 330 70% 65%;
+    --wordtype-preposition: 225 70% 65%;
+    --wordtype-conjunction: 42 90% 60%;
+    --wordtype-article: 190 70% 55%;
     --sidebar: 217 32% 17%;
     --shadow-2xs: 0 1px 3px 0px hsl(0 0% 0% / 0.05);
     --shadow-xs: 0 1px 3px 0px hsl(0 0% 0% / 0.05);
