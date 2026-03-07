@@ -1,3 +1,5 @@
+import { cn } from '@/lib/utils';
+import { WORD_TYPE_COLORS } from '@/lib/wordTypeColors';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { ConjunctionMetadata } from '@/types/dictionary';
 
