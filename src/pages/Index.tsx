@@ -84,8 +84,10 @@ const Index = () => {
                     <h1 className="text-5xl sm:text-6xl font-bold tracking-tight mb-4 text-foreground pb-2 leading-tight">
                       Langly
                     </h1>
-                    <p className="text-muted-foreground text-lg sm:text-xl font-medium">
-                      Master German, one word at a time.
+                    <p className="text-muted-foreground text-lg sm:text-xl font-medium leading-relaxed">
+                      The 2-Second German Dictionary.
+                      <br />
+                      Find the word, get the grammar.
                     </p>
                   </motion.header>
                 )}
