@@ -116,7 +116,7 @@ export function PrepositionDeepDive({
                   key={index}
                   className="flex items-center gap-2 text-foreground"
                 >
-                  <span className="w-2 h-2 rounded-full bg-indigo-500" />
+                  <span className="w-2 h-2 rounded-full bg-wordtype-preposition" />
                   <span className="font-medium">{contraction}</span>
                 </li>
               ))}
