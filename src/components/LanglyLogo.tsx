@@ -55,7 +55,7 @@ export function LanglyLogo({ size = 'lg', className }: LanglyLogoProps) {
       {/* Spine highlight */}
       <path
         d="M12 7v14"
-        stroke="#4a2c2c"
+        stroke="hsl(217, 20%, 55%)"
         strokeWidth="1"
         strokeLinecap="round"
         opacity="0.35"
