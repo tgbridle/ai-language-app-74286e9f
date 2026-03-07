@@ -52,7 +52,7 @@ export function WordDeepDive({ entryId, onBack }: WordDeepDiveProps) {
           </Button>
           <div className="flex items-center gap-0.5">
             <LanglyLogo size="sm" />
-            <span className="font-bold text-lg text-foreground">Langly</span>
+            <span className="font-bold text-lg text-[#2d3748]">Langly</span>
           </div>
           <div className="w-14" />
         </header>
