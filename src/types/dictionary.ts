@@ -46,6 +46,7 @@ export interface PronounMetadata {
     nominative: string;
     accusative: string;
     dative: string;
+    genitive?: string;
   };
 }
 

@@ -22,6 +22,7 @@ const CASES = [
   { key: 'nominative', label: 'Nominative', abbr: 'NOM' },
   { key: 'accusative', label: 'Accusative', abbr: 'ACC' },
   { key: 'dative', label: 'Dative', abbr: 'DAT' },
+  { key: 'genitive', label: 'Genitive', abbr: 'GEN' },
 ] as const;
 
 type CaseKey = typeof CASES[number]['key'];
