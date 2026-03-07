@@ -21,12 +21,12 @@ export function LanglyLogo({ size = 'lg', className }: LanglyLogoProps) {
     >
       <defs>
         <linearGradient id="leftPage" x1="0%" y1="20%" x2="80%" y2="100%">
-          <stop offset="0%" stopColor="#d4b356" stopOpacity="0.9" />
-          <stop offset="100%" stopColor="#a8872e" stopOpacity="0.7" />
+          <stop offset="0%" stopColor="hsl(217, 30%, 72%)" stopOpacity="0.6" />
+          <stop offset="100%" stopColor="hsl(217, 25%, 58%)" stopOpacity="0.45" />
         </linearGradient>
         <linearGradient id="rightPage" x1="20%" y1="0%" x2="100%" y2="80%">
-          <stop offset="0%" stopColor="#4a6fa5" stopOpacity="0.8" />
-          <stop offset="100%" stopColor="#2e4a73" stopOpacity="0.65" />
+          <stop offset="0%" stopColor="hsl(217, 35%, 60%)" stopOpacity="0.55" />
+          <stop offset="100%" stopColor="hsl(217, 30%, 48%)" stopOpacity="0.4" />
         </linearGradient>
         <filter id="pageShadow" x="-5%" y="-5%" width="110%" height="110%">
           <feDropShadow dx="0.3" dy="0.3" stdDeviation="0.4" floodColor="#000" floodOpacity="0.15" />
@@ -55,7 +55,7 @@ export function LanglyLogo({ size = 'lg', className }: LanglyLogoProps) {
       {/* Spine highlight */}
       <path
         d="M12 7v14"
-        stroke="#4a2c2c"
+        stroke="hsl(217, 20%, 55%)"
         strokeWidth="1"
         strokeLinecap="round"
         opacity="0.35"
