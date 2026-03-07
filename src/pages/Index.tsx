@@ -72,10 +72,10 @@ const Index = () => {
                 {!isSearchFocused && (
                   <motion.header
                     key="hero"
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    exit={{ opacity: 0 }}
-                    transition={{ duration: 0.2, delay: 0.25 }}
+                    initial={{ opacity: 0, y: -20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -30, height: 0, marginBottom: 0 }}
+                    transition={{ duration: 0.3, ease: 'easeInOut' }}
                     className="text-center mb-10 sm:mb-12"
                   >
                     <div className="flex justify-center">
