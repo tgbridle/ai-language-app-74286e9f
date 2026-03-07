@@ -1,4 +1,4 @@
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { HelpCircle } from 'lucide-react';
@@ -19,9 +19,23 @@ const DISCOVERY_CHIPS = [
 const Index = () => {
   const [selectedEntryId, setSelectedEntryId] = useState<string | null>(null);
   const [isSearchFocused, setIsSearchFocused] = useState(false);
+  // Delayed version of focus state — stays true a bit longer so layout doesn't shift until mini-header has faded
+  const [isLayoutCompact, setIsLayoutCompact] = useState(false);
+  const compactTimerRef = useRef<ReturnType<typeof setTimeout>>();
 
   const handleSearchFocus = useCallback((focused: boolean) => {
     setIsSearchFocused(focused);
+    if (focused) {
+      clearTimeout(compactTimerRef.current);
+      setIsLayoutCompact(true);
+    } else {
+      // Delay layout expansion so mini-header fades out first
+      compactTimerRef.current = setTimeout(() => setIsLayoutCompact(false), 180);
+    }
+  }, []);
+
+  useEffect(() => {
+    return () => clearTimeout(compactTimerRef.current);
   }, []);
 
   const handleChipClick = (entryId: string) => {
