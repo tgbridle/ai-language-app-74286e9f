@@ -113,7 +113,7 @@ export function ArticleDeepDive({
       {grammarNote && (
         <Card 
           className="border border-border shadow-sm border-l-4"
-          style={{ borderLeftColor: '#78350F' }}
+          style={{ borderLeftColor: 'hsl(var(--wordtype-article))' }}
         >
           <CardHeader className="pb-2">
             <CardTitle className="text-lg font-semibold text-foreground">
