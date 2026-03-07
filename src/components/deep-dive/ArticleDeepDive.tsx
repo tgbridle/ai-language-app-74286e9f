@@ -1,3 +1,5 @@
+import { cn } from '@/lib/utils';
+import { WORD_TYPE_COLORS } from '@/lib/wordTypeColors';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import {
   Table,
@@ -65,11 +67,7 @@ export function ArticleDeepDive({
               )}
             </div>
             <span 
-              className="px-3 py-1 rounded-full text-sm font-medium capitalize"
-              style={{ 
-                backgroundColor: 'rgba(120, 53, 15, 0.1)', 
-                color: '#78350F' 
-              }}
+              className={cn('px-3 py-1 rounded-full text-sm font-medium capitalize border', WORD_TYPE_COLORS.article.badge)}
             >
               {getArticleType()}
             </span>
@@ -115,7 +113,7 @@ export function ArticleDeepDive({
       {grammarNote && (
         <Card 
           className="border border-border shadow-sm border-l-4"
-          style={{ borderLeftColor: '#78350F' }}
+          style={{ borderLeftColor: 'hsl(var(--wordtype-article))' }}
         >
           <CardHeader className="pb-2">
             <CardTitle className="text-lg font-semibold text-foreground">

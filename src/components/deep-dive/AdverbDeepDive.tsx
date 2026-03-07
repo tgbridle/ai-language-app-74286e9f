@@ -101,9 +101,9 @@ export function AdverbDeepDive({
         </Card>
       )}
 
-      {/* Grammar Insight Card - Teal left border */}
+      {/* Grammar Insight Card */}
       {grammarNote && (
-        <Card className="border border-border shadow-sm border-l-4 border-l-teal-600 bg-muted/30">
+        <Card className="border border-border shadow-sm border-l-4 bg-muted/30" style={{ borderLeftColor: 'hsl(var(--wordtype-adverb))' }}>
           <CardHeader className="pb-2">
             <CardTitle className="text-lg font-semibold text-foreground flex items-center gap-2">
               <BookOpen className="h-5 w-5 text-teal-600 dark:text-teal-400" />

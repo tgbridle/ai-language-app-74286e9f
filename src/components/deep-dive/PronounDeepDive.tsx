@@ -1,3 +1,5 @@
+import { cn } from '@/lib/utils';
+import { WORD_TYPE_COLORS } from '@/lib/wordTypeColors';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import {
   Table,
@@ -57,7 +59,7 @@ export function PronounDeepDive({
                 </div>
               )}
             </div>
-            <span className="px-3 py-1 rounded-full text-sm font-medium capitalize bg-fuchsia-100 text-fuchsia-700 dark:bg-fuchsia-900/30 dark:text-fuchsia-400">
+            <span className={cn('px-3 py-1 rounded-full text-sm font-medium capitalize border', WORD_TYPE_COLORS.pronoun.badge)}>
               Pronoun
             </span>
           </div>
@@ -108,7 +110,7 @@ export function PronounDeepDive({
 
       {/* Grammar Insight */}
       {grammarNote && (
-        <Card className="border border-border shadow-sm border-l-4 border-l-fuchsia-500">
+        <Card className="border border-border shadow-sm border-l-4" style={{ borderLeftColor: 'hsl(var(--wordtype-pronoun))' }}>
           <CardHeader className="pb-2">
             <CardTitle className="text-lg font-semibold text-foreground">
               Grammar Insight

@@ -1,3 +1,5 @@
+import { cn } from '@/lib/utils';
+import { WORD_TYPE_COLORS } from '@/lib/wordTypeColors';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { ConjunctionMetadata } from '@/types/dictionary';
 
@@ -47,7 +49,7 @@ export function ConjunctionDeepDive({
                 </div>
               )}
             </div>
-            <span className="px-3 py-1 rounded-full text-sm font-medium capitalize bg-yellow-100 text-yellow-700 dark:bg-yellow-900/30 dark:text-yellow-400">
+            <span className={cn('px-3 py-1 rounded-full text-sm font-medium capitalize border', WORD_TYPE_COLORS.conjunction.badge)}>
               Conjunction
             </span>
           </div>
@@ -70,7 +72,7 @@ export function ConjunctionDeepDive({
 
       {/* How to use it */}
       {grammarNote && (
-        <Card className="border border-border shadow-sm border-l-4 border-l-yellow-500">
+        <Card className="border border-border shadow-sm border-l-4" style={{ borderLeftColor: 'hsl(var(--wordtype-conjunction))' }}>
           <CardHeader className="pb-2">
             <CardTitle className="text-lg font-semibold text-foreground">
               How to use it:
