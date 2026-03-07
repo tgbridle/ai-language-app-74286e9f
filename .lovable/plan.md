@@ -1,34 +1,33 @@
 
 
-## Problem Analysis
+## Contact Form with Email Forwarding via Resend
 
-The bounce/jump when tapping the search box on mobile is caused by the interaction between multiple animation systems fighting each other:
+### Prerequisites (secrets needed)
 
-1. **`motion.div layout`** on the search section (line 116-118 of Index.tsx) tells framer-motion to animate any position/size changes. When the hero collapses, this causes the search bar to animate its position shift -- but on mobile, the virtual keyboard opening simultaneously changes the viewport, creating a second layout recalculation. This produces the "bounce" effect.
+Two secrets must be configured before the edge function will work:
 
-2. **`AnimatePresence mode="wait"`** on the hero means the hero must fully exit (including its `height: 0` animation) before the mini-header enters, creating a visible gap frame.
+1. **RESEND_API_KEY** - Get a free API key from [resend.com](https://resend.com). The free tier allows 100 emails/day.
+2. **CONTACT_EMAIL** - Your personal email address where messages will be forwarded. This is stored server-side only and never exposed to the browser.
 
-3. The hero exit uses `height: 0, marginBottom: 0` which triggers a layout reflow mid-animation, and the `layout` prop on the search wrapper tries to smoothly animate that reflow -- but the two animations have different timing, causing the overshoot/bounce.
+### Implementation steps
 
-## Plan
+1. **Create `contact_messages` table** - Stores name, email, message, and created_at. RLS policy allows public inserts (no auth required), no select/update/delete.
 
-**In `src/pages/Index.tsx`:**
+2. **Create `send-contact-email` edge function** - Receives name, email, and message. Inserts into the database, then calls the Resend API to forward the message to `CONTACT_EMAIL`. Your email is read from the secret, never from the client.
 
-1. **Remove the `layout` prop** from the `motion.div` wrapping the search section. This is the primary cause of the bounce -- it tries to animate the position change caused by the hero collapsing, but fights with the hero's own exit animation and mobile keyboard resize.
+3. **Build contact form dialog** - A new component on the Help page using a Radix Dialog with:
+   - Glassmorphism styling (`bg-white/80 backdrop-blur-xl border-white/40`)
+   - Blurred backdrop (`backdrop-blur-sm`)
+   - Name, Email, Message fields using existing `Input` and `Textarea` components
+   - Zod validation via `react-hook-form`
+   - Toast confirmation on success
 
-2. **Change hero `AnimatePresence` from `mode="wait"` to default mode** so the hero exit and mini-header entrance can overlap, preventing the jarring empty gap.
+4. **Add trigger to Help page** - A subtle link at the bottom: "Need more help? Contact us" with a `Mail` icon, opening the dialog.
 
-3. **Simplify the hero exit animation** -- remove `height: 0, marginBottom: 0` from the exit and just use opacity + y transform. Use `overflow-hidden` on the header wrapper instead, and let the content simply fade/slide out without collapsing height (which avoids the layout reflow that triggers the bounce).
+### Technical details
 
-4. **Wrap the hero in a container with a fixed `min-height`** on mobile so that when it disappears, the transition is purely visual (opacity/transform) rather than causing a DOM reflow that shifts the search bar's position.
-
-Alternatively (simpler approach): Keep the height collapse but move the search bar to a fixed/sticky position during focus mode so it doesn't depend on the hero's layout at all. However, the cleanest fix is removing the `layout` prop and simplifying the exit.
-
-## Technical Details
-
-- Remove `layout` and `transition` props from the `<motion.div>` at line 116-118
-- Change it to a plain `<div className="space-y-6">`
-- Change `<AnimatePresence mode="wait">` (line 71) to `<AnimatePresence>`
-- Simplify hero exit to `exit={{ opacity: 0, y: -20 }}` without height/margin collapse
-- Add `overflow-hidden` to the hero wrapper so content clips cleanly during exit
+- The edge function sets `verify_jwt = false` since no auth is required.
+- The function validates inputs server-side with length limits before inserting or emailing.
+- CORS headers included for browser calls.
+- The Resend API is called with `from: "Langly <onboarding@resend.dev>"` (Resend's default sender on the free tier) and `to` set from the secret.
 
