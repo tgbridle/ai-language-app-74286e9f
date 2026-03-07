@@ -59,7 +59,7 @@ export function PronounDeepDive({
                 </div>
               )}
             </div>
-            <span className="px-3 py-1 rounded-full text-sm font-medium capitalize bg-fuchsia-100 text-fuchsia-700 dark:bg-fuchsia-900/30 dark:text-fuchsia-400">
+            <span className={cn('px-3 py-1 rounded-full text-sm font-medium capitalize border', WORD_TYPE_COLORS.pronoun.badge)}>
               Pronoun
             </span>
           </div>
