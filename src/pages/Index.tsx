@@ -113,11 +113,7 @@ const Index = () => {
               </AnimatePresence>
 
               {/* Search Section */}
-              <motion.div
-                layout
-                transition={{ duration: 0.3, ease: 'easeInOut' }}
-                className="space-y-6"
-              >
+              <div className="space-y-6">
                 <SearchBar
                   onSelectEntry={setSelectedEntryId}
                   onFocusChange={handleSearchFocus}
