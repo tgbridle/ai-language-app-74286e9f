@@ -22,6 +22,7 @@ const CASES = [
   { key: 'nominative', label: 'Nominative', abbr: 'NOM' },
   { key: 'accusative', label: 'Accusative', abbr: 'ACC' },
   { key: 'dative', label: 'Dative', abbr: 'DAT' },
+  { key: 'genitive', label: 'Genitive', abbr: 'GEN' },
 ] as const;
 
 type CaseKey = typeof CASES[number]['key'];
@@ -81,20 +82,24 @@ export function PronounDeepDive({
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {CASES.map((caseItem) => (
-                  <TableRow key={caseItem.key} className="border-border">
-                    <TableCell className="font-medium text-muted-foreground">
-                      <span className="hidden sm:inline">{caseItem.label}</span>
-                      <span className="sm:hidden">{caseItem.abbr}</span>
-                    </TableCell>
-                    <TableCell className="font-semibold text-foreground">
-                      {metadata.declension[caseItem.key as CaseKey]}
-                    </TableCell>
-                    <TableCell className="text-muted-foreground">
-                      {caseItem.key === 'nominative' ? englishTranslation : '-'}
-                    </TableCell>
-                  </TableRow>
-                ))}
+                {CASES.map((caseItem) => {
+                  const value = metadata.declension[caseItem.key as CaseKey];
+                  if (!value) return null;
+                  return (
+                    <TableRow key={caseItem.key} className="border-border">
+                      <TableCell className="font-medium text-muted-foreground">
+                        <span className="hidden sm:inline">{caseItem.label}</span>
+                        <span className="sm:hidden">{caseItem.abbr}</span>
+                      </TableCell>
+                      <TableCell className="font-semibold text-foreground">
+                        {value}
+                      </TableCell>
+                      <TableCell className="text-muted-foreground">
+                        {caseItem.key === 'nominative' ? englishTranslation : '-'}
+                      </TableCell>
+                    </TableRow>
+                  );
+                })}
               </TableBody>
             </Table>
           </div>
