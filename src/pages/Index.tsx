@@ -101,7 +101,7 @@ const Index = () => {
                     key="mini-header"
                     initial={{ opacity: 0, y: -10 }}
                     animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: -10 }}
+                    exit={{ opacity: 0, y: -10, transition: { duration: 0.15 } }}
                     transition={{ duration: 0.2, delay: 0.05 }}
                     className="flex items-center gap-1 mb-4"
                   >
